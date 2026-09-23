@@ -30,11 +30,26 @@ The Analysis Agent explains results, compares strategies, highlights trade-offs,
 
 All official numerical results are calculated by deterministic code, not by the LLM. The long-term scenario model is kept separate from the official two-year simulation and starts from its final state.
 
-The project is built with Next.js, TypeScript, Tailwind CSS, shadcn/ui and Recharts. AI functionality uses NVIDIA / LLM APIs.
+The project is built with Next.js, TypeScript, Tailwind CSS, shadcn/ui and Recharts. AI functionality uses OpenAI models and optional web research through OpenAI Search or Tavily. The official simulation, validation and scoring layers run locally and deterministically.
+
+Requirements:
+
+- Node.js 24+
+- pnpm 11.25.0
 
 Run locally:
 
 ```bash
-npm install
-npm run dev
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Optional AI and live research settings are documented in `.env.example`. The application can still run without API keys using local fallback behavior.
+
+Verify the project:
+
+```bash
+pnpm test
+pnpm typecheck
+pnpm build
 ```
