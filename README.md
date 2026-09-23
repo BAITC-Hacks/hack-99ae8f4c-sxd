@@ -128,3 +128,5 @@ Shared contracts, including `StrategyComparison`, are in `src/types/product.ts`;
 In the chat select M7, M8 and M10 in Nura, M12 citywide, and M5 in Saryarka. Confirm the five decisions: cost is 95 and remaining budget is 5. Run the simulation: the displayed baseline is 52.56 and final QoL is 56.54, with the M10 + M12 synergy. Remove a measure: previous results disappear and simulation is blocked until five valid decisions are confirmed again. Change the selected district or a measure and rerun to compare the effect. The automated suite covers manual input preservation, invalid portfolios and changed outcomes as well as the official engine and API rules.
 
 General Copilot questions currently use English/Russian pattern matching, rather than a full conversational planner. The interactive catalogue is the authoritative way to make precise edits. Choices are held in page memory; reloading starts a new session. The optional 2050 outlook uses live trend evidence when configured and available, otherwise labelled demo factors; scenario coefficients remain assumptions in both modes.
+
+See [project overview and architecture diagram](docs/PROJECT_OVERVIEW.md).
