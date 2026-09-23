@@ -3,43 +3,60 @@
 Future Akim Strategy & Impact Governance Tool
 
 ```text
-                              F A R S I G H T
-                Future Akim Strategy & Impact Governance Tool
+   _____    _    ____  ____ ___ ____ _   _ _____
+  |  ___|  / \  |  _ \/ ___|_ _/ ___| | | |_   _|
+  | |_    / _ \ | |_) \___ \| | |  _| |_| | | |
+  |  _|  / ___ \|  _ < ___) | | |_| |  _  | | |
+  |_|   /_/   \_\_| \_\____/___\____|_| |_| |_|
+
+     Future Akim Strategy & Impact Governance Tool
+
+           Understand today. Explore tomorrow.
 
 
-        .-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-.
-       /                    ASTANA: TODAY -> FUTURE                         \
-      |                                                                    |
-      |   USER STRATEGY                                                    |
-      |   "Green Growth"                                                    |
-      |   "Industrial-Mobility First"                                      |
-      |          |                                                         |
-      |          v                                                         |
-      |     +-----------+       +-----------+       +------------------+    |
-      |     |    AI     | ----> | VALIDATOR | ----> |  2-YEAR OFFICIAL |    |
-      |     |   AGENT   |       |           |       |    SIMULATION    |    |
-      |     +-----------+       +-----------+       +------------------+    |
-      |                                                    |               |
-      |                                                    v               |
-      |                                          +--------------------+    |
-      |                                          | QoL SCORE +        |    |
-      |                                          | AI EXPLANATION     |    |
-      |                                          +--------------------+    |
-      |                                                    |               |
-      |                                                    v               |
-      |     optional                                                        |
-      |   .----------------------- FUTURE OUTLOOK ----------------------.   |
-      |   |                                                             |   |
-      |   |   2030 ---> 2035 ---> 2040 ---> 2045 ---> 2050              |   |
-      |   |     |         |         |         |         |               |   |
-      |   | population   water    transit   aging    climate            |   |
-      |   |  growth      stress   demand    assets   pressure           |   |
-      |   |                                                             |   |
-      |   '-----------------> strategy comparison <---------------------'   |
-      |                                                                    |
-       \__________________________________________________________________/
+       "Green Growth"       "Industrial-Mobility"
+                  \           /
+                   \         /
+                    YOUR IDEA
+                        |
+                        v
+                 Strategy Agent
+                        |
+                 5 initiatives
+                        |
+                    Validator
+                 budget + rules
+                        |
+                        v
+              OFFICIAL 2-YEAR MODEL
+                   8 quarters
+                        |
+                        v
+                Astana QoL Score
+                District changes
+                 AI explanation
+                        :
+                        :  explore further?
+                        v
+                 FUTURE OUTLOOK
+                       / \
+                      /   \
+             Your plan     Research Agent
+                      \   /       ^
+                       \ /        |
+                        +     Sources & trends
+                        |
+                 Scenario Engine
+                        |
+                        v
+       2030 ---- 2035 ---- 2040 ---- 2045 ---- 2050
+                        |
+              Compare possible futures
+              Explore the trade-offs
 
-                  short-term win != long-term resilience
+
+        Two-year results. A longer perspective.
+               Scenarios, not predictions.
 ```
 
 FARSIGHT helps urban planners understand not only what a decision changes in the next two years, but also what direction it can create for the city in the future.
