@@ -23,7 +23,9 @@ This connects naturally with the Kazakhstan-2050 planning horizon and the idea o
 FARSIGHT uses three AI agents.
 
 The Strategy Agent turns natural-language goals such as “Green Growth” or “Industrial-Mobility First” into a valid set of five initiatives.
+
 The Future Research Agent gathers long-term factors such as population growth, water stress, transport demand, infrastructure aging and climate pressure.
+
 The Analysis Agent explains results, compares strategies, highlights trade-offs and suggests improvements.
 
 All official numerical results are calculated by deterministic code, not by the LLM.
