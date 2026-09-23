@@ -1,0 +1,28 @@
+.env
+.env.*
+!.env.example
+*.log
+node_modules/
+.next/
+.next-dev/
+.next-check/
+.pnpm-store/
+*.tsbuildinfo
+tmp/
+cleanup-backup.zip
+
+# Build output and local reports
+out/
+coverage/
+/integration-*-output.txt
+/long-term-*.txt
+/research-test-results.txt
+
+# Local tooling and OS files
+.vercel/
+.codex/
+.DS_Store
+Thumbs.db
+
+# Local editing probe
+/.research-edit-check

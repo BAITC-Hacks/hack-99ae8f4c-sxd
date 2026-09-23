@@ -1,0 +1,2682 @@
+{
+  "assumptions": {
+    "version": "demo-scenario-v2",
+    "baselineYear": 2026,
+    "officialEndYear": 2028,
+    "endYear": 2050,
+    "checkpoints": [
+      2026,
+      2028,
+      2030,
+      2035,
+      2040,
+      2045,
+      2050
+    ],
+    "remainingEffectYears": 3,
+    "lifecycleByCategory": {
+      "Transport": {
+        "annualEffectFraction": 0.025,
+        "halfLifeYears": 15
+      },
+      "Ecology": {
+        "annualEffectFraction": 0.035,
+        "halfLifeYears": 22
+      },
+      "Social": {
+        "annualEffectFraction": 0.02,
+        "halfLifeYears": 18
+      },
+      "Safety": {
+        "annualEffectFraction": 0.015,
+        "halfLifeYears": 10
+      },
+      "Services": {
+        "annualEffectFraction": 0.025,
+        "halfLifeYears": 16
+      }
+    },
+    "annualTrend": {
+      "T1": -0.12,
+      "T2": -0.1,
+      "E1": -0.06,
+      "E2": -0.04,
+      "S1": -0.1,
+      "S2": -0.08,
+      "B1": -0.04,
+      "B2": -0.06,
+      "C1": -0.12,
+      "C2": 0.04
+    },
+    "annualDecayRate": 0.003,
+    "baselineMaintenanceCoverage": 0.35,
+    "maintenancePerPositiveEffectPoint": 0,
+    "maximumMaintenanceCoverage": 0.9,
+    "negativeFactorMitigationPerPositiveEffectPoint": 0.018,
+    "maximumNegativeFactorMitigation": 0.45,
+    "factorPointsPerYearAtFullStrength": 0.55,
+    "factorRampYears": 5,
+    "maximumExternalImpactPerMetricPerYear": 0.8,
+    "maximumAnnualIndicatorChange": 4,
+    "decayExposureByMetric": {
+      "T1": 1,
+      "T2": 1,
+      "E1": 1,
+      "E2": 0,
+      "S1": 1,
+      "S2": 1,
+      "B1": 1,
+      "B2": 1,
+      "C1": 1,
+      "C2": 1
+    },
+    "mixedDirectionByMetric": {
+      "T1": -0.4,
+      "T2": -0.3,
+      "E1": -0.4,
+      "E2": -0.3,
+      "S1": -0.4,
+      "S2": -0.3,
+      "B1": -0.2,
+      "B2": -0.2,
+      "C1": -0.4,
+      "C2": 0.3
+    },
+    "metricWeights": {
+      "T1": 0.1,
+      "T2": 0.1,
+      "E1": 0.1,
+      "E2": 0.1,
+      "S1": 0.1,
+      "S2": 0.1,
+      "B1": 0.1,
+      "B2": 0.1,
+      "C1": 0.1,
+      "C2": 0.1
+    },
+    "description": [
+      "2026 is a baseline reference. 2028 copies official final indicators exactly; annual scenario updates start in 2029.",
+      "Scenario indicator index is a population-weighted average on a 0–100 scale, using the configured indicator weights (equal by default). It is not the official Astana QoL Score.",
+      "The unimplemented fraction of each signed catalog effect (lag / 8) is spread equally over the configured completion period after 2028; already realized effects and synergies are not applied again.",
+      "Additional annual lifecycle effects equal the catalog effect times its category annual fraction times 2^(-years since 2028 / category half-life). Negative trade-offs retain their sign.",
+      "Annual decay equals current indicator times metric decay exposure times decay rate times (1 - maintenance coverage). This is a capacity proxy, not an asset inventory. E2 has zero exposure; others have unit exposure. Investment-linked maintenance defaults to zero: investment is not maintenance funding.",
+      "Annual baseline trends represent illustrative recurring demand pressure. Factors add point impacts only during their inclusive start/end years and ramp to full strength over the configured ramp period.",
+      "Negative factor impacts are reduced on targeted metrics by half-life-tapered positive effects of selected measures, within a configured cap. Mixed factors use explicit per-metric direction coefficients.",
+      "Factor confidence is an evidence-quality label, not a probability or an impact multiplier. All demo factors are illustrative and have no research citations.",
+      "All strategies receive the same demo pressures. A separate infrastructure-aging factor is omitted to avoid double-counting routine decay.",
+      "Summed external impacts are capped per metric at 0.8 points/year; contributions on that metric scale equally. There is no cross-metric scaling.",
+      "Net annual changes are capped at 4 points before the 0–100 clamp. clampAdjustment records both limits; factor impacts are before these final limits.",
+      "Lifecycle effects and resilience taper from 2028. No positive percentage growth or reinvestment compounds indicator gains.",
+      "All scenario coefficients, dates, mappings and pressure levels are arbitrary illustrative assumptions, not empirical estimates.",
+      "District population shares remain fixed. Updates are simultaneous, indicators are clamped to 0–100 once per year, and no new measures or budget are assumed after 2028."
+    ]
+  },
+  "factors": [
+    {
+      "categories": [],
+      "factor": {
+        "id": "demo-population-demand",
+        "name": "Population and service demand",
+        "direction": "negative",
+        "strength": 0.65,
+        "confidence": 0.35,
+        "startYear": 2029,
+        "endYear": 2050,
+        "affectedMetrics": [
+          "S1",
+          "S2",
+          "C1"
+        ],
+        "rationale": "Demo hypothesis: growth puts increasing pressure on schools, clinics, and utility capacity. Selected investments soften pressure only on their affected metrics and districts.",
+        "sources": []
+      }
+    },
+    {
+      "categories": [],
+      "factor": {
+        "id": "demo-climate-pressure",
+        "name": "Climate pressure",
+        "direction": "negative",
+        "strength": 0.55,
+        "confidence": 0.3,
+        "startYear": 2032,
+        "endYear": 2050,
+        "affectedMetrics": [
+          "E1",
+          "E2",
+          "S2"
+        ],
+        "rationale": "Demo hypothesis: warming and weather stress gradually weigh on green space, environmental conditions, and health after 2032. This timing is illustrative, not a climate projection.",
+        "sources": []
+      }
+    },
+    {
+      "categories": [],
+      "factor": {
+        "id": "demo-water-stress",
+        "name": "Water stress",
+        "direction": "negative",
+        "strength": 0.6,
+        "confidence": 0.3,
+        "startYear": 2030,
+        "endYear": 2050,
+        "affectedMetrics": [
+          "C1",
+          "E1"
+        ],
+        "rationale": "Demo hypothesis: water pressure increases from 2030, challenging utilities and green space. Infrastructure and ecological choices create different levels of resilience.",
+        "sources": []
+      }
+    },
+    {
+      "categories": [],
+      "factor": {
+        "id": "demo-transport-demand",
+        "name": "Transport demand",
+        "direction": "negative",
+        "strength": 0.7,
+        "confidence": 0.4,
+        "startYear": 2029,
+        "endYear": 2050,
+        "affectedMetrics": [
+          "T1",
+          "T2",
+          "B2"
+        ],
+        "rationale": "Demo hypothesis: additional trips put pressure on mobility and road safety. Transport investment reduces modeled exposure where it improves the corresponding indicator.",
+        "sources": []
+      }
+    },
+    {
+      "categories": [],
+      "factor": {
+        "id": "demo-energy-utilities",
+        "name": "Energy and utility pressure",
+        "direction": "negative",
+        "strength": 0.5,
+        "confidence": 0.3,
+        "startYear": 2033,
+        "endYear": 2050,
+        "affectedMetrics": [
+          "C1",
+          "E2"
+        ],
+        "rationale": "Demo hypothesis: higher energy and utility demand stresses networks and environmental indicators from 2033. Utility modernization changes local exposure.",
+        "sources": []
+      }
+    },
+    {
+      "categories": [],
+      "factor": {
+        "id": "demo-urban-expansion",
+        "name": "Urban expansion and digital access",
+        "direction": "mixed",
+        "strength": 0.5,
+        "confidence": 0.3,
+        "startYear": 2030,
+        "endYear": 2050,
+        "affectedMetrics": [
+          "T1",
+          "E1",
+          "S1",
+          "C2"
+        ],
+        "rationale": "Demo hypothesis: expansion increases mobility, green-space, and school pressure while creating opportunities for digital service access. Per-metric signs are explicit in scenario configuration.",
+        "sources": []
+      }
+    }
+  ],
+  "results": [
+    {
+      "name": "Industrial-Mobility First",
+      "selectedMeasures": [
+        {
+          "measureId": "M10",
+          "districtId": "baikonur"
+        },
+        {
+          "measureId": "M2"
+        },
+        {
+          "measureId": "M3",
+          "districtId": "nura"
+        },
+        {
+          "measureId": "M4",
+          "districtId": "saryarka"
+        },
+        {
+          "measureId": "M8",
+          "districtId": "nura"
+        }
+      ],
+      "officialScore": 55.5562475,
+      "checkpoints": [
+        {
+          "year": 2026,
+          "phase": "baseline-reference",
+          "index": 56.89300000000001,
+          "cityIndicators": {
+            "T1": 47.31,
+            "T2": 63.98,
+            "E1": 53.11,
+            "E2": 57.54,
+            "S1": 53.379999999999995,
+            "S2": 57.45,
+            "B1": 63.1,
+            "B2": 55.22,
+            "C1": 58,
+            "C2": 59.84
+          },
+          "districtIndices": {
+            "almaty": 56.900000000000006,
+            "baikonur": 56.599999999999994,
+            "esil": 63.3,
+            "nura": 49.3,
+            "saryarka": 54.5
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 40,
+              "T2": 75,
+              "E1": 50,
+              "E2": 55,
+              "S1": 60,
+              "S2": 65,
+              "B1": 62,
+              "B2": 52,
+              "C1": 50,
+              "C2": 60
+            },
+            "baikonur": {
+              "T1": 52,
+              "T2": 68,
+              "E1": 55,
+              "E2": 50,
+              "S1": 58,
+              "S2": 60,
+              "B1": 52,
+              "B2": 58,
+              "C1": 55,
+              "C2": 58
+            },
+            "esil": {
+              "T1": 45,
+              "T2": 62,
+              "E1": 68,
+              "E2": 72,
+              "S1": 48,
+              "S2": 55,
+              "B1": 78,
+              "B2": 60,
+              "C1": 75,
+              "C2": 70
+            },
+            "nura": {
+              "T1": 55,
+              "T2": 40,
+              "E1": 45,
+              "E2": 65,
+              "S1": 38,
+              "S2": 35,
+              "B1": 55,
+              "B2": 50,
+              "C1": 60,
+              "C2": 50
+            },
+            "saryarka": {
+              "T1": 50,
+              "T2": 70,
+              "E1": 42,
+              "E2": 40,
+              "S1": 62,
+              "S2": 68,
+              "B1": 58,
+              "B2": 55,
+              "C1": 45,
+              "C2": 55
+            }
+          }
+        },
+        {
+          "year": 2028,
+          "phase": "official-seed",
+          "index": 58.29225,
+          "cityIndicators": {
+            "T1": 51.59,
+            "T2": 65.58,
+            "E1": 54.910000000000004,
+            "E2": 58.31,
+            "S1": 53.379999999999995,
+            "S2": 58.85,
+            "B1": 64.765,
+            "B2": 57.697500000000005,
+            "C1": 58,
+            "C2": 59.84
+          },
+          "districtIndices": {
+            "almaty": 57.425,
+            "baikonur": 58.35000000000001,
+            "esil": 63.824999999999996,
+            "nura": 52.7,
+            "saryarka": 56.300000000000004
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 43,
+              "T2": 75,
+              "E1": 50,
+              "E2": 55,
+              "S1": 60,
+              "S2": 65,
+              "B1": 62,
+              "B2": 54.25,
+              "C1": 50,
+              "C2": 60
+            },
+            "baikonur": {
+              "T1": 55,
+              "T2": 68,
+              "E1": 55,
+              "E2": 50,
+              "S1": 58,
+              "S2": 60,
+              "B1": 62.5,
+              "B2": 62,
+              "C1": 55,
+              "C2": 58
+            },
+            "esil": {
+              "T1": 48,
+              "T2": 62,
+              "E1": 68,
+              "E2": 72,
+              "S1": 48,
+              "S2": 55,
+              "B1": 78,
+              "B2": 62.25,
+              "C1": 75,
+              "C2": 70
+            },
+            "nura": {
+              "T1": 66,
+              "T2": 50,
+              "E1": 45,
+              "E2": 67,
+              "S1": 38,
+              "S2": 43.75,
+              "B1": 55,
+              "B2": 52.25,
+              "C1": 60,
+              "C2": 50
+            },
+            "saryarka": {
+              "T1": 53,
+              "T2": 70,
+              "E1": 51,
+              "E2": 42.25,
+              "S1": 62,
+              "S2": 68,
+              "B1": 59.5,
+              "B2": 57.25,
+              "C1": 45,
+              "C2": 55
+            }
+          }
+        },
+        {
+          "year": 2030,
+          "phase": "scenario",
+          "index": 58.362616033665766,
+          "cityIndicators": {
+            "T1": 52.74832060706072,
+            "T2": 66.12094935528684,
+            "E1": 55.05146240767144,
+            "E2": 58.61326458188866,
+            "S1": 52.73585540245,
+            "S2": 58.898567895237036,
+            "B1": 64.6980613285746,
+            "B2": 57.802511246888294,
+            "C1": 57.25389397000001,
+            "C2": 59.703273541600005
+          },
+          "districtIndices": {
+            "almaty": 57.08712492565546,
+            "baikonur": 58.161703573471,
+            "esil": 63.46881279740546,
+            "nura": 54.32583278766868,
+            "saryarka": 56.35985942815379
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 43.20917120592625,
+              "T2": 74.27713033750003,
+              "E1": 49.597307125,
+              "E2": 54.92,
+              "S1": 59.330062575,
+              "S2": 64.3725425875,
+              "B1": 61.678513755000004,
+              "B2": 54.33880797062826,
+              "C1": 49.285063550000004,
+              "C2": 59.86265015
+            },
+            "baikonur": {
+              "T1": 55.16241683592625,
+              "T2": 67.30440372000002,
+              "E1": 54.5778261375,
+              "E2": 49.92,
+              "S1": 57.337854969999995,
+              "S2": 59.392023575,
+              "B1": 63.499908201539895,
+              "B2": 62.28657718724385,
+              "C1": 54.2655825625,
+              "C2": 57.870442544999996
+            },
+            "esil": {
+              "T1": 48.18969021842625,
+              "T2": 61.327780905,
+              "E1": 67.52717557000001,
+              "E2": 71.91999999999999,
+              "S1": 47.376816944999995,
+              "S2": 54.4115045625,
+              "B1": 77.61617459499999,
+              "B2": 62.30763839062826,
+              "C1": 74.18765861249999,
+              "C2": 69.823688175
+            },
+            "nura": {
+              "T1": 72.2609195237979,
+              "T2": 57.04401550835517,
+              "E1": 44.6167881125,
+              "E2": 68.4399897425802,
+              "S1": 37.415778919999994,
+              "S2": 47.28073486632527,
+              "B1": 54.7057871375,
+              "B2": 52.34660036562826,
+              "C1": 59.246101575000004,
+              "C2": 49.901612125
+            },
+            "saryarka": {
+              "T1": 53.170209230926254,
+              "T2": 69.29661132500001,
+              "E1": 53.40983898948217,
+              "E2": 42.87033111537911,
+              "S1": 61.32227018,
+              "S2": 67.360853995,
+              "B1": 59.65468439262205,
+              "B2": 57.32711937812826,
+              "C1": 44.3045445375,
+              "C2": 54.8821311375
+            }
+          }
+        },
+        {
+          "year": 2035,
+          "phase": "scenario",
+          "index": 56.44214014153898,
+          "cityIndicators": {
+            "T1": 51.132357435160216,
+            "T2": 64.21512695922331,
+            "E1": 52.585778451248686,
+            "E2": 57.80480582461679,
+            "S1": 49.7413413660391,
+            "S2": 56.28990274766653,
+            "B1": 64.11045766024863,
+            "B2": 55.9010523423128,
+            "C1": 53.005388373232854,
+            "C2": 59.63519025564083
+          },
+          "districtIndices": {
+            "almaty": 54.83106570387418,
+            "baikonur": 56.026772266207615,
+            "esil": 61.167284793252946,
+            "nura": 53.60171859892548,
+            "saryarka": 54.53881053997905
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 40.93283571755601,
+              "T2": 71.36953901500218,
+              "E1": 46.54610160673158,
+              "E2": 53.78500000000001,
+              "S1": 56.271505274908804,
+              "S2": 61.17751692359263,
+              "B1": 60.88026748292931,
+              "B2": 52.4409204020688,
+              "C1": 45.11395162535408,
+              "C2": 59.793018990598405
+            },
+            "baikonur": {
+              "T1": 52.76999083937419,
+              "T2": 64.46453186060823,
+              "E1": 51.47824957415582,
+              "E2": 48.78500000000001,
+              "S1": 54.29864608793909,
+              "S2": 56.24536895616838,
+              "B1": 63.81688068273168,
+              "B2": 60.542795264691634,
+              "C1": 50.04609959277832,
+              "C2": 57.82015980362869
+            },
+            "esil": {
+              "T1": 45.86498368498025,
+              "T2": 58.54595429969911,
+              "E1": 64.30183428945885,
+              "E2": 70.78499999999995,
+              "S1": 44.434350153090605,
+              "S2": 51.313220988744135,
+              "B1": 76.66314097868683,
+              "B2": 60.33235714994758,
+              "C1": 69.77469146247522,
+              "C2": 69.65731492544688
+            },
+            "nura": {
+              "T1": 74.40878830251594,
+              "T2": 60.06976614568357,
+              "E1": 41.61395363930734,
+              "E2": 68.42014456184349,
+              "S1": 34.57005421824213,
+              "S2": 47.584186962075414,
+              "B1": 53.97526032853536,
+              "B2": 50.468061215099105,
+              "C1": 54.97824756020257,
+              "C2": 49.928723055749906
+            },
+            "saryarka": {
+              "T1": 50.7971316524045,
+              "T2": 66.43739104757795,
+              "E1": 53.51406890274896,
+              "E2": 42.47591347360921,
+              "S1": 58.24436446187849,
+              "S2": 64.13680570404715,
+              "B1": 59.339546293896845,
+              "B2": 55.40020918252334,
+              "C1": 40.181803657929834,
+              "C2": 54.86087102317415
+            }
+          }
+        },
+        {
+          "year": 2040,
+          "phase": "scenario",
+          "index": 53.637357295413175,
+          "cityIndicators": {
+            "T1": 48.2720368461519,
+            "T2": 61.49711416308582,
+            "E1": 48.50042603780966,
+            "E2": 54.94238900618418,
+            "S1": 46.43179570940602,
+            "S2": 52.299930428899636,
+            "B1": 63.39805630152278,
+            "B2": 53.45719570522728,
+            "C1": 47.90850249112911,
+            "C2": 59.666126264715295
+          },
+          "districtIndices": {
+            "almaty": 51.88277744145837,
+            "baikonur": 53.11801545882074,
+            "esil": 58.17396934351175,
+            "nura": 51.24676650969768,
+            "saryarka": 51.86847167758329
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 37.89867182758422,
+              "T2": 68.26083362537156,
+              "E1": 42.09716184828611,
+              "E2": 50.75250000000001,
+              "S1": 52.89853834591529,
+              "S2": 56.89775976577764,
+              "B1": 60.08977381782809,
+              "B2": 50.016405260337756,
+              "C1": 40.09370776422971,
+              "C2": 59.82242215925329
+            },
+            "baikonur": {
+              "T1": 49.620863917933356,
+              "T2": 61.42288823933456,
+              "E1": 46.981408552598246,
+              "E2": 45.75250000000001,
+              "S1": 50.944839664190425,
+              "S2": 52.013513061465524,
+              "B1": 63.4481498448528,
+              "B2": 58.149313361762296,
+              "C1": 44.977954468541846,
+              "C2": 57.86872347752843
+            },
+            "esil": {
+              "T1": 42.782918531896364,
+              "T2": 55.561792194159956,
+              "E1": 59.680449983809815,
+              "E2": 67.75249999999993,
+              "S1": 41.17634625556614,
+              "S2": 47.12926635715338,
+              "B1": 75.71936327162683,
+              "B2": 57.831199987237184,
+              "C1": 64.5149412857903,
+              "C2": 69.59091556787759
+            },
+            "nura": {
+              "T1": 72.75513904591642,
+              "T2": 59.07835840780048,
+              "E1": 37.21291514397396,
+              "E2": 65.83181026209418,
+              "S1": 31.40785284694186,
+              "S2": 44.950924456363005,
+              "B1": 53.25182843179108,
+              "B2": 48.062706578612904,
+              "C1": 49.862201172853986,
+              "C2": 50.05392875062899
+            },
+            "saryarka": {
+              "T1": 47.66716523620851,
+              "T2": 63.37658692105942,
+              "E1": 51.108680818593676,
+              "E2": 39.938496821245614,
+              "S1": 54.85223702764016,
+              "S2": 59.82830778836493,
+              "B1": 58.81865236493678,
+              "B2": 52.94695328292504,
+              "C1": 35.20946105991756,
+              "C2": 54.93817545494114
+            }
+          }
+        },
+        {
+          "year": 2045,
+          "phase": "scenario",
+          "index": 50.808161186673836,
+          "cityIndicators": {
+            "T1": 45.2952284967265,
+            "T2": 58.73923367693401,
+            "E1": 44.393207817424084,
+            "E2": 51.996621194943465,
+            "S1": 43.15439252261101,
+            "S2": 48.30626982106745,
+            "B1": 62.668006043000794,
+            "B2": 50.97077265742996,
+            "C1": 42.861117814849585,
+            "C2": 59.69676182175142
+          },
+          "districtIndices": {
+            "almaty": 48.93966877268123,
+            "baikonur": 50.19765222298155,
+            "esil": 55.1862707936623,
+            "nura": 48.77958961925091,
+            "saryarka": 49.15959219436883
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 34.806007999417915,
+              "T2": 65.18232013504937,
+              "E1": 37.691430411112975,
+              "E2": 47.66500000000001,
+              "S1": 49.55832983726952,
+              "S2": 52.659567819514784,
+              "B1": 59.306957465996966,
+              "B2": 47.55331353769902,
+              "C1": 35.12222075786049,
+              "C2": 59.85153976289119
+            },
+            "baikonur": {
+              "T1": 46.414353584901626,
+              "T2": 58.41078521018387,
+              "E1": 42.52824107173118,
+              "E2": 42.66500000000001,
+              "S1": 47.623605573022225,
+              "S2": 47.8227571588966,
+              "B1": 62.951115196648665,
+              "B2": 55.684817517308694,
+              "C1": 39.95903141847869,
+              "C2": 57.916815498643906
+            },
+            "esil": {
+              "T1": 39.64281866003613,
+              "T2": 52.60661241744197,
+              "E1": 55.10394878933853,
+              "E2": 64.66499999999989,
+              "S1": 37.9499842517858,
+              "S2": 42.98594649827838,
+              "B1": 74.7847515799751,
+              "B2": 55.29221059468816,
+              "C1": 59.30627406095142,
+              "C2": 69.52516108412763
+            },
+            "nura": {
+              "T1": 70.67771067805226,
+              "T2": 57.682421997516855,
+              "E1": 32.854619750494756,
+              "E2": 63.09901652546707,
+              "S1": 28.27636293054939,
+              "S2": 42.077991975093994,
+              "B1": 52.53542254113146,
+              "B2": 45.61858927345173,
+              "C1": 44.7958420790969,
+              "C2": 50.17791844165476
+            },
+            "saryarka": {
+              "T1": 44.47962932065434,
+              "T2": 60.345509474431154,
+              "E1": 48.41893923115678,
+              "E2": 37.27589275434379,
+              "S1": 51.493054101516826,
+              "S2": 55.56165421588574,
+              "B1": 58.26570371211441,
+              "B2": 50.45539993406994,
+              "C1": 30.28541009724226,
+              "C2": 55.01472910227297
+            }
+          }
+        },
+        {
+          "year": 2050,
+          "phase": "scenario",
+          "index": 47.96863153997427,
+          "cityIndicators": {
+            "T1": 42.23282599692448,
+            "T2": 55.95554316614283,
+            "E1": 40.27330614526933,
+            "E2": 49.026759403064936,
+            "S1": 39.90881963640958,
+            "S2": 44.31638950307165,
+            "B1": 61.92658183494168,
+            "B2": 48.45623628291011,
+            "C1": 37.86275358625399,
+            "C2": 59.72709984475411
+          },
+          "districtIndices": {
+            "almaty": 46.01023235609665,
+            "baikonur": 47.27914230504284,
+            "esil": 52.21267755511872,
+            "nura": 46.23181092012569,
+            "saryarka": 46.42687293876672
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 31.673560116104948,
+              "T2": 62.13370531882779,
+              "E1": 33.32848765387546,
+              "E2": 44.577500000000015,
+              "S1": 46.2505615975854,
+              "S2": 48.46253740142961,
+              "B1": 58.531743864992706,
+              "B2": 45.064835955936736,
+              "C1": 30.199017077280214,
+              "C2": 59.88037457493359
+            },
+            "baikonur": {
+              "T1": 43.16916487956566,
+              "T2": 55.427935873475704,
+              "E1": 38.1183229719841,
+              "E2": 39.577500000000015,
+              "S1": 44.33462747034195,
+              "S2": 43.672702083321006,
+              "B1": 62.365651036290615,
+              "B2": 53.17222589237033,
+              "C1": 34.98885239538884,
+              "C2": 57.96444044769013
+            },
+            "esil": {
+              "T1": 36.46339543421359,
+              "T2": 49.68013349174531,
+              "E1": 50.571894799066534,
+              "E2": 61.57749999999988,
+              "S1": 34.754956834124684,
+              "S2": 38.88286676521237,
+              "B1": 73.85921688294013,
+              "B2": 52.72857246491054,
+              "C1": 54.14819366782324,
+              "C2": 69.46004521115086
+            },
+            "nura": {
+              "T1": 68.27135760633533,
+              "T2": 55.97132614473284,
+              "E1": 28.53865233576684,
+              "E2": 60.293047073276,
+              "S1": 25.175286197907436,
+              "S2": 39.0141719426907,
+              "B1": 51.82597441964061,
+              "B2": 43.14890182869328,
+              "C1": 39.778687713497476,
+              "C2": 50.30070393871632
+            },
+            "saryarka": {
+              "T1": 41.25323075232221,
+              "T2": 57.343870000719164,
+              "E1": 45.49245576255314,
+              "E2": 34.551359356704005,
+              "S1": 48.16649572482889,
+              "S2": 51.33643859229481,
+              "B1": 57.68642103544653,
+              "B2": 47.9387371468019,
+              "C1": 25.40918175917154,
+              "C2": 55.09053925682494
+            }
+          }
+        }
+      ],
+      "runs": [
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 50.77642632277798,
+          "minIndicator": 29.009700623083646,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 53.048350562714475,
+          "minIndicator": 30.559706921793943,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 50.17504076967158,
+          "minIndicator": 27.67251035560554,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 52.43549683811697,
+          "minIndicator": 29.38909082048271,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 49.607980839401264,
+          "minIndicator": 24.96445867389747,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 51.857439098798416,
+          "minIndicator": 26.627461244030016,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 49.82245966423504,
+          "minIndicator": 25.802546636744925,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 52.075180823117435,
+          "minIndicator": 27.287916123038023,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 49.25539973396472,
+          "minIndicator": 24.80861259762765,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 51.49712308379888,
+          "minIndicator": 26.46525987451632,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 48.916143055610185,
+          "minIndicator": 24.37859343507733,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 51.15062968646762,
+          "minIndicator": 26.019273717936485,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 48.902818628528195,
+          "minIndicator": 22.595392650406225,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 51.13680706879936,
+          "minIndicator": 24.016125324282115,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 48.56356195017366,
+          "minIndicator": 22.595392650406225,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 50.790313671468084,
+          "minIndicator": 24.016125324282115,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 48.24782687730607,
+          "minIndicator": 22.595392650406225,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 50.468161046366006,
+          "minIndicator": 24.016125324282115,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 48.26599060000326,
+          "minIndicator": 27.78917745905613,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 50.50140325937654,
+          "minIndicator": 29.315871150097113,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 47.69893066973295,
+          "minIndicator": 25.43481622161038,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 49.92334552005799,
+          "minIndicator": 27.114942555573432,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 47.54294044332207,
+          "minIndicator": 24.82333586988584,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 49.76260840458077,
+          "minIndicator": 26.481556775672992,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 47.346349564296396,
+          "minIndicator": 24.582023472717356,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 49.56302950505844,
+          "minIndicator": 26.044080351341137,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 46.988946767024444,
+          "minIndicator": 24.582023472717356,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 49.19779614539512,
+          "minIndicator": 26.044080351341137,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 46.8620792606889,
+          "minIndicator": 24.347236642644912,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 49.06713956718839,
+          "minIndicator": 25.98677499896383,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 46.66721268420066,
+          "minIndicator": 21.37486948637865,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 48.86878245226503,
+          "minIndicator": 22.772289552585217,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 46.341308121582266,
+          "minIndicator": 21.37486948637865,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 48.536091654036795,
+          "minIndicator": 22.772289552585217,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 46.22774578424079,
+          "minIndicator": 21.37486948637865,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 48.41922312085349,
+          "minIndicator": 22.772289552585217,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 46.11448390360154,
+          "minIndicator": 25.90517376932331,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 48.314861339402555,
+          "minIndicator": 27.60242386711686,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 45.9783988613541,
+          "minIndicator": 25.206608608422407,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 48.174218685852175,
+          "minIndicator": 26.879229549808024,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 45.90307674954991,
+          "minIndicator": 24.784354557242516,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 48.096053635929565,
+          "minIndicator": 26.44117248235675,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 45.426638542588165,
+          "minIndicator": 23.361500308689827,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 47.61163343286832,
+          "minIndicator": 24.800244579644268,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 45.31818461131283,
+          "minIndicator": 23.361500308689827,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 47.49950450430369,
+          "minIndicator": 24.800244579644268,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 45.256200556128825,
+          "minIndicator": 23.361500308689827,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 47.43513770200561,
+          "minIndicator": 24.800244579644268,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 44.957836574519334,
+          "minIndicator": 20.154346322351056,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 47.13123231798944,
+          "minIndicator": 21.528453780888317,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 44.86585637910742,
+          "minIndicator": 20.154346322351056,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 47.03615150894662,
+          "minIndicator": 21.528453780888317,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 44.81403952631816,
+          "minIndicator": 20.154346322351056,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 46.98232217007301,
+          "minIndicator": 21.528453780888317,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Green Growth",
+      "selectedMeasures": [
+        {
+          "measureId": "M11",
+          "districtId": "nura"
+        },
+        {
+          "measureId": "M3",
+          "districtId": "nura"
+        },
+        {
+          "measureId": "M4",
+          "districtId": "saryarka"
+        },
+        {
+          "measureId": "M5",
+          "districtId": "saryarka"
+        },
+        {
+          "measureId": "M8",
+          "districtId": "nura"
+        }
+      ],
+      "officialScore": 55.44040999999999,
+      "checkpoints": [
+        {
+          "year": 2026,
+          "phase": "baseline-reference",
+          "index": 56.89300000000001,
+          "cityIndicators": {
+            "T1": 47.31,
+            "T2": 63.98,
+            "E1": 53.11,
+            "E2": 57.54,
+            "S1": 53.379999999999995,
+            "S2": 57.45,
+            "B1": 63.1,
+            "B2": 55.22,
+            "C1": 58,
+            "C2": 59.84
+          },
+          "districtIndices": {
+            "almaty": 56.900000000000006,
+            "baikonur": 56.599999999999994,
+            "esil": 63.3,
+            "nura": 49.3,
+            "saryarka": 54.5
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 40,
+              "T2": 75,
+              "E1": 50,
+              "E2": 55,
+              "S1": 60,
+              "S2": 65,
+              "B1": 62,
+              "B2": 52,
+              "C1": 50,
+              "C2": 60
+            },
+            "baikonur": {
+              "T1": 52,
+              "T2": 68,
+              "E1": 55,
+              "E2": 50,
+              "S1": 58,
+              "S2": 60,
+              "B1": 52,
+              "B2": 58,
+              "C1": 55,
+              "C2": 58
+            },
+            "esil": {
+              "T1": 45,
+              "T2": 62,
+              "E1": 68,
+              "E2": 72,
+              "S1": 48,
+              "S2": 55,
+              "B1": 78,
+              "B2": 60,
+              "C1": 75,
+              "C2": 70
+            },
+            "nura": {
+              "T1": 55,
+              "T2": 40,
+              "E1": 45,
+              "E2": 65,
+              "S1": 38,
+              "S2": 35,
+              "B1": 55,
+              "B2": 50,
+              "C1": 60,
+              "C2": 50
+            },
+            "saryarka": {
+              "T1": 50,
+              "T2": 70,
+              "E1": 42,
+              "E2": 40,
+              "S1": 62,
+              "S2": 68,
+              "B1": 58,
+              "B2": 55,
+              "C1": 45,
+              "C2": 55
+            }
+          }
+        },
+        {
+          "year": 2028,
+          "phase": "official-seed",
+          "index": 57.973,
+          "cityIndicators": {
+            "T1": 48.31,
+            "T2": 65.58,
+            "E1": 54.910000000000004,
+            "E2": 60.06,
+            "S1": 53.379999999999995,
+            "S2": 58.85,
+            "B1": 63.4,
+            "B2": 56.9,
+            "C1": 58.5,
+            "C2": 59.84
+          },
+          "districtIndices": {
+            "almaty": 56.900000000000006,
+            "baikonur": 56.599999999999994,
+            "esil": 63.3,
+            "nura": 53.05,
+            "saryarka": 56.900000000000006
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 40,
+              "T2": 75,
+              "E1": 50,
+              "E2": 55,
+              "S1": 60,
+              "S2": 65,
+              "B1": 62,
+              "B2": 52,
+              "C1": 50,
+              "C2": 60
+            },
+            "baikonur": {
+              "T1": 52,
+              "T2": 68,
+              "E1": 55,
+              "E2": 50,
+              "S1": 58,
+              "S2": 60,
+              "B1": 52,
+              "B2": 58,
+              "C1": 55,
+              "C2": 58
+            },
+            "esil": {
+              "T1": 45,
+              "T2": 62,
+              "E1": 68,
+              "E2": 72,
+              "S1": 48,
+              "S2": 55,
+              "B1": 78,
+              "B2": 60,
+              "C1": 75,
+              "C2": 70
+            },
+            "nura": {
+              "T1": 61.25,
+              "T2": 50,
+              "E1": 45,
+              "E2": 67,
+              "S1": 38,
+              "S2": 43.75,
+              "B1": 55,
+              "B2": 60.5,
+              "C1": 60,
+              "C2": 50
+            },
+            "saryarka": {
+              "T1": 50,
+              "T2": 70,
+              "E1": 51,
+              "E2": 51,
+              "S1": 62,
+              "S2": 68,
+              "B1": 59.5,
+              "B2": 55,
+              "C1": 47.5,
+              "C2": 55
+            }
+          }
+        },
+        {
+          "year": 2030,
+          "phase": "scenario",
+          "index": 58.00585422434889,
+          "cityIndicators": {
+            "T1": 48.5764874518934,
+            "T2": 66.12094935528684,
+            "E1": 55.05146240767144,
+            "E2": 61.25024028957583,
+            "S1": 52.73585540245,
+            "S2": 58.898567895237036,
+            "B1": 63.16634510727442,
+            "B2": 56.546419669600944,
+            "C1": 58.00894112289904,
+            "C2": 59.703273541600005
+          },
+          "districtIndices": {
+            "almaty": 56.41214712100001,
+            "baikonur": 56.111367881500016,
+            "esil": 62.793834992750014,
+            "nura": 54.63716894945691,
+            "saryarka": 57.38089305379144
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 39.35153625,
+              "T2": 74.27713033750003,
+              "E1": 49.597307125,
+              "E2": 54.92,
+              "S1": 59.330062575,
+              "S2": 64.3725425875,
+              "B1": 61.678513755000004,
+              "B2": 51.44666487999999,
+              "C1": 49.285063550000004,
+              "C2": 59.86265015
+            },
+            "baikonur": {
+              "T1": 51.30478188000001,
+              "T2": 67.30440372000002,
+              "E1": 54.5778261375,
+              "E2": 49.92,
+              "S1": 57.337854969999995,
+              "S2": 59.392023575,
+              "B1": 51.717475730000004,
+              "B2": 57.42328769499999,
+              "C1": 54.2655825625,
+              "C2": 57.870442544999996
+            },
+            "esil": {
+              "T1": 44.332055262500006,
+              "T2": 61.327780905,
+              "E1": 67.52717557000001,
+              "E2": 71.91999999999999,
+              "S1": 47.376816944999995,
+              "S2": 54.4115045625,
+              "B1": 77.61617459499999,
+              "B2": 59.415495299999996,
+              "C1": 74.18765861249999,
+              "C2": 69.823688175
+            },
+            "nura": {
+              "T1": 66.43954582261497,
+              "T2": 57.04401550835517,
+              "E1": 44.6167881125,
+              "E2": 68.4399897425802,
+              "S1": 37.415778919999994,
+              "S2": 47.28073486632527,
+              "B1": 54.7057871375,
+              "B2": 61.28133568469342,
+              "C1": 59.246101575000004,
+              "C2": 49.901612125
+            },
+            "saryarka": {
+              "T1": 49.31257427500001,
+              "T2": 69.29661132500001,
+              "E1": 53.40983898948217,
+              "E2": 56.05520965381497,
+              "S1": 61.32227018,
+              "S2": 67.360853995,
+              "B1": 59.65468439262205,
+              "B2": 54.43497628749999,
+              "C1": 48.079780301995186,
+              "C2": 54.8821311375
+            }
+          }
+        },
+        {
+          "year": 2035,
+          "phase": "scenario",
+          "index": 56.05205614028219,
+          "cityIndicators": {
+            "T1": 46.12498230264542,
+            "T2": 64.21512695922331,
+            "E1": 52.585778451248686,
+            "E2": 61.2496583999854,
+            "S1": 49.7413413660391,
+            "S2": 56.28990274766653,
+            "B1": 62.446339472744015,
+            "B2": 54.23229437864832,
+            "C1": 53.99994706898017,
+            "C2": 59.63519025564083
+          },
+          "districtIndices": {
+            "almaty": 54.016374475906424,
+            "baikonur": 53.713660394603394,
+            "esil": 60.35259356528519,
+            "nura": 53.883657266408434,
+            "saryarka": 55.94382494756925
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 36.266818161965254,
+              "T2": 71.36953901500218,
+              "E1": 46.54610160673158,
+              "E2": 53.78500000000001,
+              "S1": 56.271505274908804,
+              "S2": 61.17751692359263,
+              "B1": 60.88026748292931,
+              "B2": 48.96002567798193,
+              "C1": 45.11395162535408,
+              "C2": 59.793018990598405
+            },
+            "baikonur": {
+              "T1": 48.10397328378344,
+              "T2": 64.46453186060823,
+              "E1": 51.47824957415582,
+              "E2": 48.78500000000001,
+              "S1": 54.29864608793909,
+              "S2": 56.24536895616838,
+              "B1": 51.01597154808082,
+              "B2": 54.87860323889102,
+              "C1": 50.04609959277832,
+              "C2": 57.82015980362869
+            },
+            "esil": {
+              "T1": 41.1989661293895,
+              "T2": 58.54595429969911,
+              "E1": 64.30183428945885,
+              "E2": 70.78499999999995,
+              "S1": 44.434350153090605,
+              "S2": 51.313220988744135,
+              "B1": 76.66314097868683,
+              "B2": 56.85146242586071,
+              "C1": 69.77469146247522,
+              "C2": 69.65731492544688
+            },
+            "nura": {
+              "T1": 67.60928589114998,
+              "T2": 60.06976614568357,
+              "E1": 41.61395363930734,
+              "E2": 68.42014456184349,
+              "S1": 34.57005421824213,
+              "S2": 47.584186962075414,
+              "B1": 53.97526032853536,
+              "B2": 60.08695030129459,
+              "C1": 54.97824756020257,
+              "C2": 49.928723055749906
+            },
+            "saryarka": {
+              "T1": 46.131114096813754,
+              "T2": 66.43739104757795,
+              "E1": 53.51406890274896,
+              "E2": 59.70017635045224,
+              "S1": 58.24436446187849,
+              "S2": 64.13680570404715,
+              "B1": 59.339546293896845,
+              "B2": 51.91931445843647,
+              "C1": 45.15459713666639,
+              "C2": 54.86087102317415
+            }
+          }
+        },
+        {
+          "year": 2040,
+          "phase": "scenario",
+          "index": 53.240098760728564,
+          "cityIndicators": {
+            "T1": 42.874877348495595,
+            "T2": 61.49711416308582,
+            "E1": 48.50042603780966,
+            "E2": 58.84931937268007,
+            "S1": 46.43179570940602,
+            "S2": 52.299930428899636,
+            "B1": 61.691563274888416,
+            "B2": 51.59457855275514,
+            "C1": 48.99525645454992,
+            "C2": 59.666126264715295
+          },
+          "districtIndices": {
+            "almaty": 51.00324436093851,
+            "baikonur": 50.698614229110994,
+            "esil": 57.294436262991894,
+            "nura": 51.51153950566699,
+            "saryarka": 53.48578076202179
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 32.85156218154523,
+              "T2": 68.26083362537156,
+              "E1": 42.09716184828611,
+              "E2": 50.75250000000001,
+              "S1": 52.89853834591529,
+              "S2": 56.89775976577764,
+              "B1": 60.08977381782809,
+              "B2": 46.26818410117815,
+              "C1": 40.09370776422971,
+              "C2": 59.82242215925329
+            },
+            "baikonur": {
+              "T1": 44.57375427189437,
+              "T2": 61.42288823933456,
+              "E1": 46.981408552598246,
+              "E2": 45.75250000000001,
+              "S1": 50.944839664190425,
+              "S2": 52.013513061465524,
+              "B1": 50.321280409203794,
+              "B2": 52.12928014635272,
+              "C1": 44.977954468541846,
+              "C2": 57.86872347752843
+            },
+            "esil": {
+              "T1": 37.735808885857374,
+              "T2": 55.561792194159956,
+              "E1": 59.680449983809815,
+              "E2": 67.75249999999993,
+              "S1": 41.17634625556614,
+              "S2": 47.12926635715338,
+              "B1": 75.71936327162683,
+              "B2": 54.08297882807758,
+              "C1": 64.5149412857903,
+              "C2": 69.59091556787759
+            },
+            "nura": {
+              "T1": 65.5202178272692,
+              "T2": 59.07835840780048,
+              "E1": 37.21291514397396,
+              "E2": 65.83181026209418,
+              "S1": 31.40785284694186,
+              "S2": 44.950924456363005,
+              "B1": 53.25182843179108,
+              "B2": 57.945357756953065,
+              "C1": 49.862201172853986,
+              "C2": 50.05392875062899
+            },
+            "saryarka": {
+              "T1": 42.62005559016953,
+              "T2": 63.37658692105942,
+              "E1": 51.108680818593676,
+              "E2": 59.4731486537251,
+              "S1": 54.85223702764016,
+              "S2": 59.82830778836493,
+              "B1": 58.81865236493678,
+              "B2": 49.19873212376543,
+              "C1": 40.643230877021615,
+              "C2": 54.93817545494114
+            }
+          }
+        },
+        {
+          "year": 2045,
+          "phase": "scenario",
+          "index": 50.410619258162804,
+          "cityIndicators": {
+            "T1": 39.60355505740735,
+            "T2": 58.73923367693401,
+            "E1": 44.393207817424084,
+            "E2": 56.30012109899765,
+            "S1": 43.15439252261101,
+            "S2": 48.30626982106745,
+            "B1": 60.936694766255336,
+            "B2": 48.95162982670565,
+            "C1": 44.024326172474034,
+            "C2": 59.69676182175142
+          },
+          "districtIndices": {
+            "almaty": 48.01093273463855,
+            "baikonur": 47.704405161063285,
+            "esil": 54.25753475561963,
+            "nura": 49.0252893091308,
+            "saryarka": 50.964210287165464
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 29.46947533481578,
+              "T2": 65.18232013504937,
+              "E1": 37.691430411112975,
+              "E2": 47.66500000000001,
+              "S1": 49.55832983726952,
+              "S2": 52.659567819514784,
+              "B1": 59.306957465996966,
+              "B2": 43.60248582187441,
+              "C1": 35.12222075786049,
+              "C2": 59.85153976289119
+            },
+            "baikonur": {
+              "T1": 41.07782092029951,
+              "T2": 58.41078521018387,
+              "E1": 42.52824107173118,
+              "E2": 42.66500000000001,
+              "S1": 47.623605573022225,
+              "S2": 47.8227571588966,
+              "B1": 49.633336144760534,
+              "B2": 49.40665861461627,
+              "C1": 39.95903141847869,
+              "C2": 57.916815498643906
+            },
+            "esil": {
+              "T1": 34.30628599543401,
+              "T2": 52.60661241744197,
+              "E1": 55.10394878933853,
+              "E2": 64.66499999999989,
+              "S1": 37.9499842517858,
+              "S2": 42.98594649827838,
+              "B1": 74.7847515799751,
+              "B2": 51.34138287886355,
+              "C1": 59.30627406095142,
+              "C2": 69.52516108412763
+            },
+            "nura": {
+              "T1": 63.12154817146873,
+              "T2": 57.682421997516855,
+              "E1": 32.854619750494756,
+              "E2": 63.09901652546707,
+              "S1": 28.27636293054939,
+              "S2": 42.077991975093994,
+              "B1": 52.53542254113146,
+              "B2": 55.631748678834,
+              "C1": 44.7958420790969,
+              "C2": 50.17791844165476
+            },
+            "saryarka": {
+              "T1": 39.14309665605223,
+              "T2": 60.345509474431154,
+              "E1": 48.41893923115678,
+              "E2": 58.793392274614725,
+              "S1": 51.493054101516826,
+              "S2": 55.56165421588574,
+              "B1": 58.26570371211441,
+              "B2": 46.504572218245336,
+              "C1": 36.101451885364504,
+              "C2": 55.01472910227297
+            }
+          }
+        },
+        {
+          "year": 2050,
+          "phase": "scenario",
+          "index": 47.57563361321361,
+          "cityIndicators": {
+            "T1": 36.32180595414184,
+            "T2": 55.95554316614283,
+            "E1": 40.27330614526933,
+            "E2": 53.66902813598864,
+            "S1": 39.90881963640958,
+            "S2": 44.31638950307165,
+            "B1": 60.1828167199647,
+            "B2": 46.31253493245943,
+            "C1": 39.08899209393405,
+            "C2": 59.72709984475411
+          },
+          "districtIndices": {
+            "almaty": 45.04468399055298,
+            "baikonur": 44.736277403277334,
+            "esil": 51.247129189575055,
+            "nura": 46.45845545727872,
+            "saryarka": 48.39557819352494
+          },
+          "districtIndicators": {
+            "almaty": {
+              "T1": 26.12023548152268,
+              "T2": 62.13370531882779,
+              "E1": 33.32848765387546,
+              "E2": 44.577500000000015,
+              "S1": 46.2505615975854,
+              "S2": 48.46253740142961,
+              "B1": 58.531743864992706,
+              "B2": 40.962676935082364,
+              "C1": 30.199017077280214,
+              "C2": 59.88037457493359
+            },
+            "baikonur": {
+              "T1": 37.615840244983445,
+              "T2": 55.427935873475704,
+              "E1": 38.1183229719841,
+              "E2": 39.577500000000015,
+              "S1": 44.33462747034195,
+              "S2": 43.672702083321006,
+              "B1": 48.95207322877544,
+              "B2": 46.71047931681273,
+              "C1": 34.98885239538884,
+              "C2": 57.96444044769013
+            },
+            "esil": {
+              "T1": 30.91007079963135,
+              "T2": 49.68013349174531,
+              "E1": 50.571894799066534,
+              "E2": 61.57749999999988,
+              "S1": 34.754956834124684,
+              "S2": 38.88286676521237,
+              "B1": 73.85921688294013,
+              "B2": 48.626413444056176,
+              "C1": 54.14819366782324,
+              "C2": 69.46004521115086
+            },
+            "nura": {
+              "T1": 60.48243667050051,
+              "T2": 55.97132614473284,
+              "E1": 28.53865233576684,
+              "E2": 60.293047073276,
+              "S1": 25.175286197907436,
+              "S2": 39.0141719426907,
+              "B1": 51.82597441964061,
+              "B2": 53.20426813605834,
+              "C1": 39.778687713497476,
+              "C2": 50.30070393871632
+            },
+            "saryarka": {
+              "T1": 35.69990611774,
+              "T2": 57.343870000719164,
+              "E1": 45.49245576255314,
+              "E2": 57.762703021322515,
+              "S1": 48.16649572482889,
+              "S2": 51.33643859229481,
+              "B1": 57.68642103544653,
+              "B2": 43.83657812594753,
+              "C1": 31.54037429757188,
+              "C2": 55.09053925682494
+            }
+          }
+        }
+      ],
+      "runs": [
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 50.421097980053844,
+          "minIndicator": 29.009700623083646,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 52.65975565849217,
+          "minIndicator": 30.559706921793943,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 49.8226711032499,
+          "minIndicator": 29.009700623083646,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 52.049923320978316,
+          "minIndicator": 30.559706921793943,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 49.251704724714834,
+          "minIndicator": 27.729815995537553,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 51.46792777168762,
+          "minIndicator": 29.452416840681256,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 49.47029433981677,
+          "minIndicator": 25.802546636744925,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 51.6898200090949,
+          "minIndicator": 27.287916123038023,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 48.8993279612817,
+          "minIndicator": 25.802546636744925,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 51.107824459804206,
+          "minIndicator": 27.287916123038023,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 48.554746012141734,
+          "minIndicator": 25.802546636744925,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 50.75588566633772,
+          "minIndicator": 27.287916123038023,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 48.54695119784857,
+          "minIndicator": 22.595392650406225,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 50.7477211479208,
+          "minIndicator": 24.016125324282115,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 48.202369248708614,
+          "minIndicator": 22.595392650406225,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 50.39578235445431,
+          "minIndicator": 24.016125324282115,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 47.88595118449787,
+          "minIndicator": 22.595392650406225,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5390976535429957,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.3,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 50.07292275799356,
+          "minIndicator": 24.016125324282115,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6440976535429925,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 47.906722924514135,
+          "minIndicator": 26.0276861928562,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 50.10835769674404,
+          "minIndicator": 27.56898549389692,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 47.33575654597906,
+          "minIndicator": 26.0276861928562,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 49.52636214745334,
+          "minIndicator": 27.56898549389692,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 47.17556152437628,
+          "minIndicator": 26.0276861928562,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 49.361338162924596,
+          "minIndicator": 27.56898549389692,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 46.98337978254592,
+          "minIndicator": 24.582023472717356,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 49.16625883556991,
+          "minIndicator": 26.044080351341137,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 46.621772190082055,
+          "minIndicator": 24.582023472717356,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 48.796738606855065,
+          "minIndicator": 26.044080351341137,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 46.49440199571335,
+          "minIndicator": 24.582023472717356,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 48.66556388674108,
+          "minIndicator": 26.044080351341137,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 46.30024244926169,
+          "minIndicator": 21.37486948637865,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 48.46793761684111,
+          "minIndicator": 22.772289552585217,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 45.97336009569448,
+          "minIndicator": 21.37486948637865,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 48.134236271872695,
+          "minIndicator": 22.772289552585217,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 45.859551297387526,
+          "minIndicator": 21.37486948637865,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.5174411717974507,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.6,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 48.017113194921905,
+          "minIndicator": 22.772289552585217,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6224411717974476,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 45.702668124310875,
+          "minIndicator": 21.60000904248991,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 47.86866227483475,
+          "minIndicator": 23.053358923444122,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 45.56336101430299,
+          "minIndicator": 21.60000904248991,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 47.72474691390758,
+          "minIndicator": 23.053358923444122,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 45.48677423487467,
+          "minIndicator": 21.60000904248991,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.3,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 47.64527755416927,
+          "minIndicator": 23.053358923444122,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 45.01180503754047,
+          "minIndicator": 21.60000904248991,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 47.16237436403984,
+          "minIndicator": 23.053358923444122,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 44.902086438641,
+          "minIndicator": 21.60000904248991,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 47.04894112565951,
+          "minIndicator": 23.053358923444122,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 44.8400243202612,
+          "minIndicator": 21.60000904248991,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.6,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 46.98449430993867,
+          "minIndicator": 23.053358923444122,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0,
+          "finalIndex": 44.54194274385091,
+          "minIndicator": 20.154346322351056,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.3,
+          "maintenance": 0.7,
+          "finalIndex": 46.68088164246139,
+          "minIndicator": 21.528453780888317,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0,
+          "finalIndex": 44.44935670217178,
+          "minIndicator": 20.154346322351056,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.6,
+          "maintenance": 0.7,
+          "finalIndex": 46.58517381654338,
+          "minIndicator": 21.528453780888317,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0,
+          "finalIndex": 44.39778259895051,
+          "minIndicator": 20.154346322351056,
+          "maxIndicator": 77.726,
+          "maxAnnualChange": 3.495784690051906,
+          "limitCount": 0
+        },
+        {
+          "strength": 0.9,
+          "population": 0.9,
+          "water": 0.9,
+          "maintenance": 0.7,
+          "finalIndex": 46.53159696011295,
+          "minIndicator": 21.528453780888317,
+          "maxIndicator": 77.8898,
+          "maxAnnualChange": 3.6007846900519027,
+          "limitCount": 0
+        }
+      ]
+    }
+  ]
+}

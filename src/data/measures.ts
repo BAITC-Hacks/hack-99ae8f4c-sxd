@@ -1,0 +1,33 @@
+import type { Measure } from '../types';
+import { deepFreeze } from './immutable.ts';
+
+export const MEASURES = deepFreeze([
+  { id: 'M1', category: 'Transport', name: 'Dedicated bus lanes', scope: 'district', cost: 18, lag: 2,
+    effects: [{ indicator: 'T1', delta: 6 }, { indicator: 'T2', delta: 9 }] },
+  { id: 'M2', category: 'Transport', name: 'Smart traffic lights', scope: 'city', cost: 22, lag: 2,
+    effects: [{ indicator: 'T1', delta: 4 }, { indicator: 'B2', delta: 3 }] },
+  { id: 'M3', category: 'Transport', name: 'LRT line / expansion', scope: 'district', cost: 30, lag: 4,
+    effects: [{ indicator: 'T1', delta: 16 }, { indicator: 'T2', delta: 20 }, { indicator: 'E2', delta: 4 }] },
+  { id: 'M4', category: 'Ecology', name: 'Park / public square', scope: 'district', cost: 15, lag: 2,
+    effects: [{ indicator: 'E1', delta: 12 }, { indicator: 'E2', delta: 3 }, { indicator: 'B1', delta: 2 }] },
+  { id: 'M5', category: 'Ecology', name: 'Clean fuel conversion for private sector', scope: 'district', cost: 25, lag: 3,
+    effects: [{ indicator: 'E2', delta: 14 }, { indicator: 'C1', delta: 4 }] },
+  { id: 'M6', category: 'Ecology', name: 'City greening and windbreak program', scope: 'city', cost: 20, lag: 4,
+    effects: [{ indicator: 'E1', delta: 5 }, { indicator: 'E2', delta: 3 }] },
+  { id: 'M7', category: 'Social', name: 'School + kindergarten', scope: 'district', cost: 24, lag: 3,
+    effects: [{ indicator: 'S1', delta: 16 }] },
+  { id: 'M8', category: 'Social', name: 'Family health center / clinic', scope: 'district', cost: 20, lag: 3,
+    effects: [{ indicator: 'S2', delta: 14 }] },
+  { id: 'M9', category: 'Social', name: 'Neighborhood sports hubs', scope: 'district', cost: 10, lag: 1,
+    effects: [{ indicator: 'S1', delta: 3 }, { indicator: 'S2', delta: 3 }, { indicator: 'B1', delta: 3 }] },
+  { id: 'M10', category: 'Safety', name: 'Lighting and cameras / Safe City expansion', scope: 'district', cost: 12, lag: 1,
+    effects: [{ indicator: 'B1', delta: 12 }, { indicator: 'B2', delta: 2 }] },
+  { id: 'M11', category: 'Safety', name: 'Safe crossings and school zones', scope: 'district', cost: 10, lag: 1,
+    effects: [{ indicator: 'B2', delta: 12 }, { indicator: 'T1', delta: -2 }] },
+  { id: 'M12', category: 'Services', name: 'Unified digital citizen request platform', scope: 'city', cost: 14, lag: 1,
+    effects: [{ indicator: 'C2', delta: 5 }] },
+  { id: 'M13', category: 'Services', name: 'Heating and water network modernization', scope: 'district', cost: 28, lag: 4,
+    effects: [{ indicator: 'C1', delta: 18 }, { indicator: 'E2', delta: 2 }] },
+  { id: 'M14', category: 'Services', name: 'Emergency utility teams + early warning', scope: 'city', cost: 16, lag: 1,
+    effects: [{ indicator: 'C1', delta: 5 }, { indicator: 'C2', delta: 2 }] },
+] as const satisfies readonly Measure[]);
