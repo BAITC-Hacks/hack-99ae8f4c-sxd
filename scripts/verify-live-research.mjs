@@ -11,7 +11,7 @@ async function post(path, body) {
 }
 for (const name of ['Green Growth', 'Industrial-Mobility', 'Social Infrastructure First']) {
   const selectedMeasures = generateLocalStrategy(name).selectedMeasures;
-  const official = await post('/api/simulation', { selectedMeasures });
+  const official = await post('/api/simulate', { selectedMeasures });
   console.log('official keys', Object.keys(official));
   const research = await post('/api/research', { officialResult: official.result ?? official });
   console.log(name, research.sourceMode, research.failure ?? '', research.factors?.length);
@@ -27,4 +27,5 @@ assert.equal(outlook.research.sourceMode, 'live');
 assert.deepEqual(outlook.scenario.factors, outlook.research.factors);
 await writeFile('docs/live-outlook-result.json', JSON.stringify(outlook, null, 2));
 console.log('Live factors passed into Scenario Engine; comparison succeeded.');
+
 
