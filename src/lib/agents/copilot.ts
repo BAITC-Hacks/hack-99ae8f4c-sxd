@@ -4,7 +4,8 @@ import { generateStrategies } from './strategy.ts';
 import type { CopilotResponse } from '../../types/product.ts';
 import type { Selection } from '../simulator.ts';
 import { runOfficialSimulation } from '../official.ts';
-import { analyzeOfficialResult, prioritizeAnalysis } from './analysis.ts';
+import { analyzeOfficialResult } from './analysis.ts';
+import { answerOfficialQuestion } from './answer.ts';
 
 /** Questions must not replace the workspace portfolio or discard calculated results. */
 export async function respondToCopilot(message: string, selections?: Selection[], comparison?: Selection[]): Promise<CopilotResponse> {
@@ -18,7 +19,9 @@ export async function respondToCopilot(message: string, selections?: Selection[]
   const greeting = /^(?:hi|hello|hey|thanks|thank you|привет|здравствуйте|спасибо)[!.\s]*$/i.test(text);
   if (!action && (question || greeting)) {
     if (question && selections) {
-      const report = await prioritizeAnalysis(analyzeOfficialResult(runOfficialSimulation(selections), comparison ? runOfficialSimulation(comparison) : undefined), text);
+      const result = runOfficialSimulation(selections);
+      const other = comparison ? runOfficialSimulation(comparison) : undefined;
+      const report = await answerOfficialQuestion(result, analyzeOfficialResult(result, other), text, other);
       return { kind: 'answer', message: report.answer || [report.summary, ...report.sections.slice(0, 3).map(section => `${section.title}: ${section.body}`)].join('\n\n') };
     }
     const rules = russian
@@ -28,8 +31,8 @@ export async function respondToCopilot(message: string, selections?: Selection[]
     const simulation = /simulat|score|result|baseline|симуляц|результат|балл/i.test(text);
     const introduction = simulation
       ? russian
-        ? 'После проверки мер запустите Official 2-Year Simulation. Она рассчитывает результат за два года; затем можно выбрать Ask about result и задать вопрос о нём.'
-        : 'Review the selected measures, then run the Official 2-Year Simulation to calculate the two-year result. Afterward, choose Ask about result to ask about the calculated outcome.'
+        ? 'После проверки мер запустите 2-Year Official Simulation. Она рассчитывает результат за два года; затем можно выбрать Ask about result и задать вопрос о нём.'
+        : 'Review the selected measures, then run the 2-Year Official Simulation to calculate the two-year result. Afterward, choose Ask about result to ask about the calculated outcome.'
       : russian
         ? `${capability ? 'Да, вы можете описать своими словами приоритеты развития Астаны.' : 'Я помогу составить или сравнить стратегии развития Астаны.'} Укажите важные направления и районы, например: «Создай стратегию улучшения транспорта в Нуре».`
         : `${capability ? 'Yes, you can describe your own priorities for Astana in your own words.' : 'I can help create or compare urban development strategies for Astana.'} Describe your priorities and districts, for example: “Create a strategy focused on transport in Nura.”`;

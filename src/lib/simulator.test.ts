@@ -124,7 +124,7 @@ test("simultaneous synergies stay attached to their own district measure", () =>
   ]);
 });
 
-test("effects are clamped before synergy and synergy is clamped again", () => {
+test("effects and synergies are summed before indicator clipping", () => {
   const data = dataset([
     measure("M1", { fullEffect: { T1: -200, T2: 200, S1: -200 } }),
     measure("M2", { scope: "city" }),
@@ -135,7 +135,7 @@ test("effects are clamped before synergy and synergy is clamped again", () => {
     { measureId: "M1", districtId: "Nura" }, { measureId: "M2" },
     { measureId: "M10", districtId: "Nura" }, { measureId: "M12" },
   ], data);
-  assert.equal(result.indicatorsAfter.Nura.T1, 2);
+  assert.equal(result.indicatorsAfter.Nura.T1, 0);
   assert.equal(result.indicatorsAfter.Nura.T2, 100);
   assert.equal(result.indicatorsAfter.Nura.S1, 0);
   assert.equal(result.indicatorsAfter.Nura.B1, 100);

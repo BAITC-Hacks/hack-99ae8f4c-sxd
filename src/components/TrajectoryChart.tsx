@@ -15,7 +15,7 @@ export function TrajectoryChart({ scenario, comparison, name = "Selected strateg
   const [visible, setVisible] = useState({ a: true, b: true });
   const [metric, setMetric] = useState('index');
   const gradientId = useId().replace(/:/g, '');
-  if (!scenario) return <Card className="trajectory-card"><div className="panel-heading"><h2>Explore the road to 2050</h2></div><div className="empty-state chart-empty"><p>Run the official two-year simulation, then open the optional 2050 Outlook.</p></div></Card>;
+  if (!scenario) return <Card className="trajectory-card"><div className="panel-heading"><h2>Explore the road to 2050</h2></div><div className="empty-state chart-empty"><p>Run the 2-Year Official Simulation, then open the optional 2050 Outlook.</p></div></Card>;
   const view = views.find(v => v.id === metric)!;
   const value = (point: ScenarioCheckpoint) => view.codes ? view.codes.reduce((sum, code) => sum + point.cityIndicators[code], 0) / view.codes.length : point.index;
   const rows = scenario.checkpoints.map(point => {
@@ -41,7 +41,7 @@ export function TrajectoryChart({ scenario, comparison, name = "Selected strateg
         {comparison && visible.b && <Line type="linear" dataKey="b" name={comparisonName} stroke="#61a6ec" strokeDasharray="6 4" strokeWidth={2.5} dot={{ r: 3, strokeWidth: 2, fill: '#fff' }} isAnimationActive={false} />}
       </ComposedChart></ResponsiveContainer>
     </div>
-    <div className="chart-footer"><span>{view.codes ? 'Population-weighted mean of the two sector indicators.' : 'Scenario indicator index: population-weighted average of all ten indicators.'} The 2028 state comes from the official simulation. Later values are exploratory scenarios, not official QoL scores.</span></div>
+    <div className="chart-footer"><span>{view.codes ? 'Population-weighted mean of the two sector indicators.' : 'Scenario indicator index: population-weighted average of all ten indicators.'} The 2028 state comes from the 2-Year Official Simulation. Later values are exploratory scenarios, not official QoL scores.</span></div>
     <details className="indicator-details"><summary>View scenario checkpoint values</summary><div className="table-scroll"><table className="district-table"><caption className="sr-only">{view.label}: scenario checkpoints</caption><thead><tr><th>Year</th><th>Phase</th><th>{name}</th>{comparison && <th>{comparisonName}</th>}</tr></thead><tbody>{rows.map(row => <tr key={row.year}><th scope="row">{row.year}</th><td>{row.year === 2026 ? 'Baseline reference' : row.year === 2028 ? 'Official indicators' : 'Scenario'}</td><td>{row.a.toFixed(2)}</td>{comparison && <td>{row.b?.toFixed(2)}</td>}</tr>)}</tbody></table></div></details>
   </Card>;
 }

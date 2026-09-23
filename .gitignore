@@ -27,3 +27,7 @@ Thumbs.db
 # Local editing probe
 /.research-edit-check
 /.next-*-dev/
+
+# Additional build directories and local tooling
+/.next-*/
+/dist/

@@ -6,7 +6,7 @@ Reviewed 2026-09-23. Changes are limited to API orchestration, shared API types,
 
 ## Required flow
 
-User prompt → Strategy Agent → Validator → Official 2-Year Simulation → QoL Result → Analysis Agent works without requesting Future Outlook. The browser renders official numbers before analysis completes. A failed analysis HTTP request keeps those numbers and exposes an explanation retry. Comparison analysis uses independent settled outcomes so one failed explanation does not discard the other.
+User prompt → Strategy Agent → Validator → 2-Year Official Simulation → QoL Result → Analysis Agent works without requesting Future Outlook. The browser renders official numbers before analysis completes. A failed analysis HTTP request keeps those numbers and exposes an explanation retry. Comparison analysis uses independent settled outcomes so one failed explanation does not discard the other.
 
 Future Research → Long-Term Scenario Engine → Future Outlook remains optional. Research orchestration has a 25-second deadline in addition to provider-owned timeouts. Timeout errors return a human-readable 504. Optional failure never clears the official result. Malformed factors are rejected before a scenario is rendered.
 
@@ -48,7 +48,7 @@ To reproduce browser failure checks, run a production app on localhost:3103, the
 | Local strategy generation | FALLBACK | Validated deterministic generation without model access. |
 | Manual strategy editor | WORKING | Existing validation tests; fresh/reset builder state checked. |
 | Validator | WORKING | Rejects invalid portfolios before official simulation. |
-| Official 2-Year Simulation | WORKING | Deterministic and independent of research/model availability. |
+| 2-Year Official Simulation | WORKING | Deterministic and independent of research/model availability. |
 | QoL result / district display | WORKING | Remains visible when optional requests fail. |
 | Analysis Agent | WORKING | Live evidence selection plus calculated fallback; endpoint failure isolated. |
 | Comparison | WORKING | Two official results; independent explanation outcomes. |

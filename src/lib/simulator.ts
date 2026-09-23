@@ -101,9 +101,6 @@ function applyStrategy(districts: readonly District[], selections: readonly Reso
       }
     }
   }
-  for (const indicators of values.values()) {
-    for (const key of INDICATORS) indicators[key] = clampIndicator(indicators[key]);
-  }
   const activatedSynergies: ActivatedSynergy[] = [];
   for (const { districtMeasureId: anchor, cityMeasureId: partner, effects } of SYNERGIES) {
     if (!selections.some(item => item.measure.id === partner)) continue;
@@ -112,14 +109,18 @@ function applyStrategy(districts: readonly District[], selections: readonly Reso
         const indicators = values.get(districtId)!;
         for (const { indicator, delta } of effects) {
           const before = indicators[indicator];
-          indicators[indicator] = clampIndicator(before + delta);
+          indicators[indicator] = before + delta;
           activatedSynergies.push({
             measures: [anchor, partner], districtId, indicator, bonus: delta,
-            appliedBonus: indicators[indicator] - before,
+            appliedBonus: clampIndicator(indicators[indicator]) - clampIndicator(before),
           });
         }
       }
     }
+  }
+  // The official formula clips once, after summing all effects and fixed synergies.
+  for (const indicators of values.values()) {
+    for (const key of INDICATORS) indicators[key] = clampIndicator(indicators[key]);
   }
   const after = districts.map(district => ({ ...district, indicators: values.get(district.id)! }));
   return { after, activatedSynergies, score: scoreCity(after) };

@@ -118,7 +118,7 @@ export function validateLongTermAssumptions(value: unknown): asserts value is Lo
 
 /** Shared boundary for the optional research and scenario stages; never calculates official scores. */
 export function validateOfficialSeed(result: SimulationResult): void {
-  requireCondition(record(result), 'An official simulation result is required');
+  requireCondition(record(result), 'A 2-Year Official Simulation result is required');
   requireCondition(Array.isArray(result.selectedMeasures) && result.selectedMeasures.every(selection => record(selection)
     && typeof selection.measureId === 'string' && (selection.districtId === undefined || typeof selection.districtId === 'string')),
   'Official selected measures are malformed');
@@ -235,7 +235,7 @@ export function runLongTermScenario(
   }
   return {
     kind: 'scenario', metricLabel: 'Scenario indicator index',
-    notice: 'Exploratory 2050 scenario using illustrative assumptions; not the official hackathon score or a forecast. The 2028 indicator state is copied from the official 2-year simulation.',
+    notice: 'Exploratory 2050 scenario using illustrative assumptions; not the official hackathon score or a forecast. The 2028 indicator state is copied from the 2-Year Official Simulation.',
     checkpoints, annualSteps, factors: orderedFactors, assumptions: structuredClone(config),
   };
 }

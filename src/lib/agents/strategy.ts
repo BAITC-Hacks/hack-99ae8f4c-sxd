@@ -38,7 +38,7 @@ export function interpretPriorities(intent: string): StrategyPriority[] {
     category, weight: categoryWords[category].test(emphasis) ? 4 : 1,
     rationale: categoryWords[category].test(emphasis) ? 'Explicitly emphasized in the request.' :
       stabilityPhrases.some(phrase => categoryWords[category].test(phrase)) ?
-        'Requested to remain stable; actual outcomes are checked by the official simulation.' : 'Retained for balanced coverage.',
+        'Requested to remain stable; actual outcomes are checked by the 2-Year Official Simulation.' : 'Retained for balanced coverage.',
   }));
   const total = values.reduce((sum, value) => sum + value.weight, 0);
   return values.map(value => ({ ...value, weight: value.weight / total }));

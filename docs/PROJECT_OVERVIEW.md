@@ -28,7 +28,7 @@ Future Akim Strategy & Impact Governance Tool
                  budget + rules
                         |
                         v
-              OFFICIAL 2-YEAR MODEL
+              2-Year Official Simulation
                    8 quarters
                         |
                         v
@@ -63,7 +63,7 @@ FARSIGHT helps urban planners understand not only what a decision changes in the
 
 The HackAlem case gives a clear short-term simulation: the user selects 5 initiatives, stays within a fixed budget, and sees how those decisions affect Astana's districts over 8 quarters.
 
-FARSIGHT keeps this official 2-year model as the core of the product.
+FARSIGHT keeps this 2-Year Official Simulation as the core of the product.
 
 A user can describe a strategy in natural language, for example "Industrial-Mobility First" or "Green Growth". The AI turns that idea into a valid set of 5 initiatives. The system checks the budget and constraints, applies the official effects, lags and synergies, and calculates the Astana Quality of Life Score.
 
@@ -85,7 +85,7 @@ The main flow is:
 User Strategy
 -> AI Strategy Agent
 -> Validator
--> Official 2-Year Simulation
+-> 2-Year Official Simulation
 -> Astana Quality of Life Score
 -> AI Explanation
 
@@ -98,7 +98,7 @@ Optional:
 -> Future Outlook
 ```
 
-The 2-year simulation remains the official core of the project. The long-term layer is an additional scenario-planning tool and is not presented as an exact forecast.
+The 2-Year Official Simulation remains the official core of the project. The long-term layer is an additional scenario-planning tool and is not presented as an exact forecast.
 
 All official numerical results are calculated by a deterministic simulation engine. The LLM is used to understand strategy intent, generate valid options, research long-term factors, compare scenarios and explain results.
 

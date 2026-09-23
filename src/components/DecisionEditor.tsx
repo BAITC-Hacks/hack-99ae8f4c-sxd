@@ -15,7 +15,7 @@ export function DecisionEditor({ selections, busy, dirty, variant, onChange, onA
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>('Transport');
   const [step, setStep] = useState<'intro' | 'choose' | 'review'>(selections.length ? 'review' : 'intro');
   const validation = validateStrategy(selections);
-  if (step === 'intro') return <Card className="decision-panel wizard-intro"><h2>Let’s build your strategy</h2><p>You have 100 units to make five decisions for Astana. I’ll guide you from choosing initiatives to seeing their impact.</p><Button disabled={busy} onClick={() => setStep('choose')}>Let’s start →</Button><p>Prefer to describe your idea? Send a prompt below and I’ll propose a strategy you can review and edit.</p></Card>;
+  if (step === 'intro') return <Card className="decision-panel wizard-intro"><h2>Let’s build your strategy</h2><p>You have 100 units to make five decisions for Astana. I’ll guide you from choosing initiatives to seeing their impact.</p><Button disabled={busy} onClick={() => setStep('choose')}>Build strategy</Button><p>Prefer to describe your idea? Send a prompt below and I’ll propose a strategy you can review and edit.</p></Card>;
   return <section className="decision-editor" aria-labelledby="decisions-title">
     {step === 'choose' && <details className="baseline-data"><summary>Explore the starting districts and indicators</summary>
       <p>All users start with the same data. Every indicator is on a 0–100 scale; higher is better. Values below 40 incur a score penalty.</p>
@@ -47,8 +47,8 @@ export function DecisionEditor({ selections, busy, dirty, variant, onChange, onA
       <details className="catalog-rules"><summary>Synergies and incompatible measures</summary><ul>{SYNERGIES.map(s => <li key={s.id}>{s.id}: {s.effects.map(e => `${e.indicator} +${e.delta}`).join(', ')} in the district of {s.districtMeasureId}; no lag scaling.</li>)}{INCOMPATIBILITIES.map(c => <li key={c.id}>{c.measureIds.join(' + ')}: cannot be combined {c.scope === 'anywhere' ? 'anywhere in the city' : 'in the same district'}.</li>)}</ul></details>
       {!validation.valid && <div className="decision-errors" role="status"><strong>{step === 'choose' ? 'To continue:' : 'Before confirming:'}</strong><ul>{validation.errors.map((e, i) => <li key={`${e.code}-${i}`}>{e.message}</li>)}</ul></div>}
       <div className="decision-actions">
-        {step === 'choose' ? <><Button disabled={busy || !validation.valid} onClick={() => setStep('review')}>Next: review strategy →</Button><Button variant="outline" disabled={busy} onClick={() => setStep('intro')}>Back</Button></> : <><Button disabled={busy || !validation.valid || (!dirty && !canRun)} onClick={dirty ? onApply : onRun}>{dirty ? 'Confirm my five decisions' : 'Run my simulation →'}</Button><Button variant="outline" disabled={busy} onClick={() => setStep('choose')}>Edit choices</Button></>}
-        <span>{step === 'choose' ? 'Choose five initiatives and their districts to continue.' : dirty ? 'Check your choices and budget before confirming.' : 'Your decisions are confirmed. Run the simulation to see their impact.'}</span>
+        {step === 'choose' ? <><Button disabled={busy || !validation.valid} onClick={() => setStep('review')}>Next: review strategy →</Button><Button variant="outline" disabled={busy} onClick={() => setStep('intro')}>Back</Button></> : <><Button disabled={busy || !validation.valid || (!dirty && !canRun)} onClick={dirty ? onApply : onRun}>{dirty ? 'Confirm my five decisions' : 'Run 2-Year Official Simulation →'}</Button><Button variant="outline" disabled={busy} onClick={() => setStep('choose')}>Edit choices</Button></>}
+        <span>{step === 'choose' ? 'Choose five initiatives and their districts to continue.' : dirty ? 'Check your choices and budget before confirming.' : 'Your decisions are confirmed. Run the 2-Year Official Simulation to see their impact.'}</span>
       </div>
     </Card>
   </section>;

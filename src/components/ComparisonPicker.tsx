@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
+import { STRATEGY_PRESETS } from "@/data/strategy-presets";
+import { createPresetStrategy } from "@/lib/strategy-presets";
 import type { GeneratedStrategy, StrategyResponse } from "@/types/product";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 
 export type ComparisonChoice = { strategy: GeneratedStrategy } | { intent: string };
-const presets = ["Industrial-Mobility", "Green Growth", "Social wellbeing", "Safety", "Utilities and services"];
+const presets: string[] = STRATEGY_PRESETS.map(preset => preset.name);
 export function ComparisonPicker({ initialIntents, strategies, busy, dirty, onConfirm, onCancel }: {
   initialIntents?: [string, string];
   strategies: StrategyResponse | null; busy: boolean; dirty: boolean;
@@ -19,7 +21,8 @@ export function ComparisonPicker({ initialIntents, strategies, busy, dirty, onCo
     const existing = choice === "a" ? strategies?.strategyA : choice === "b" ? strategies?.strategyB : undefined;
     if (existing) return { strategy: existing };
     if (choice === "custom") return custom[index].trim() ? { intent: custom[index].trim() } : undefined;
-    return presets.includes(choice) ? { intent: choice } : undefined;
+    const preset = STRATEGY_PRESETS.find(item => item.name === choice);
+    return preset ? { strategy: createPresetStrategy(preset) } : undefined;
   }
   return <Card className="comparison-picker" id="comparison-picker" tabIndex={-1}>
     <h2>Choose two strategies to compare</h2>
@@ -46,7 +49,7 @@ export function ComparisonPicker({ initialIntents, strategies, busy, dirty, onCo
       </label>)}</div>
       {error && <p className="comparison-choice-error" id="comparison-choice-error" role="alert">{error}</p>}
       <div className="decision-actions"><Button type="submit" disabled={busy}>{busy ? "Preparing strategies…" : "Confirm pair and prepare"}</Button><Button type="button" variant="outline" disabled={busy} onClick={onCancel}>Cancel</Button></div>
-      <p>Review both sets of five initiatives, then run the official simulation.</p>
+      <p>Review both sets of five initiatives, then run the 2-Year Official Simulation.</p>
     </form>
   </Card>;
 }
