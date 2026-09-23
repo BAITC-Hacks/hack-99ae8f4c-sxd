@@ -1,5 +1,7 @@
 # FARSIGHT Hour 3 integration review
 
+> Historical integration snapshot. For current behavior and timeouts, see [the README](../README.md), [Future Research](FUTURE_RESEARCH.md), and [acceptance follow-up](ACCEPTANCE-FOLLOWUP.md).
+
 Reviewed 2026-09-23. Changes are limited to API orchestration, shared API types, client request lifecycle, integration tests, development logging, and a local failure-injection proxy. Strategy/model, research-provider, analysis-agent, official scoring, and long-term calibration implementations were not rewritten by this review.
 
 ## Required flow

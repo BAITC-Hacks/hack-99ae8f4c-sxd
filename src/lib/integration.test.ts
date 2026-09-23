@@ -100,7 +100,7 @@ test('research deadline returns human-readable 504 while official result remains
   const pending = outlookPost(request(body));
   // Let body parsing and provider invocation install the deadline before advancing time.
   await new Promise<void>(resolve => setImmediate(resolve));
-  t.mock.timers.tick(25_001);
+  t.mock.timers.tick(70_001);
   const response = await pending;
   assert.equal(response.status, 504);
   assert.match((await response.json()).error, /official result is still available/i);

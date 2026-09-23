@@ -1,5 +1,7 @@
 # Документация FARSIGHT
 
+- [Current acceptance follow-up (2026-09-23)](ACCEPTANCE-FOLLOWUP.md) — PASS; supersedes the earlier audit findings.
+
 - [Запуск, архитектура и правила симуляции](../README.md)
 - [Участие в разработке](../CONTRIBUTING.md)
 - [Источники и исследование будущих факторов](FUTURE_RESEARCH.md)

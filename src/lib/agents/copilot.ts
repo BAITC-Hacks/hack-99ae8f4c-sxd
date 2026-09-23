@@ -1,3 +1,4 @@
+import { comparisonIntent } from '../comparison-intent.ts';
 import { STRATEGY_RULES } from '../../data/rules.ts';
 import { generateStrategies } from './strategy.ts';
 import type { CopilotResponse } from '../../types/product.ts';
@@ -9,7 +10,8 @@ import { analyzeOfficialResult, prioritizeAnalysis } from './analysis.ts';
 export async function respondToCopilot(message: string, selections?: Selection[], comparison?: Selection[]): Promise<CopilotResponse> {
   const text = message.trim();
   const russian = /[а-яё]/i.test(text);
-  const action = /^(?:(?:can|could|would)\s+you\s+|please\s+)?(?:create|generate|build|design|compare|prioriti[sz]e|focus)\b/i.test(text) ||
+  const comparisonCommand = comparisonIntent(text);
+  const action = Boolean(comparisonCommand) || /^(?:(?:can|could|would)\s+you\s+|please\s+)?(?:create|generate|build|design|compare|prioriti[sz]e|focus)\b/i.test(text) ||
     /^(?:(?:можешь|можете)\s+)?(?:создай|создайте|составь|составьте|сравни|сравните|разработай)(?:\s|$)/i.test(text);
   const question = /\?|\b(?:why|explain|explaim|baseline)\b|почему|объясн/i.test(text) || /^(?:can|could|may|should|would|what|why|how|which|when|where|is|are|do|does|tell\s+me|explain|help)\b/i.test(text) ||
     /^(?:можно|могу|можешь|можете|как|что|почему|какие|какую|зачем|объясни|расскажи|помоги)(?:\s|$)/i.test(text);
@@ -33,7 +35,7 @@ export async function respondToCopilot(message: string, selections?: Selection[]
         : `${capability ? 'Yes, you can describe your own priorities for Astana in your own words.' : 'I can help create or compare urban development strategies for Astana.'} Describe your priorities and districts, for example: “Create a strategy focused on transport in Nura.”`;
     return { kind: 'answer', message: `${introduction} ${rules}` };
   }
-  const comparisonRequest = text.match(/^compare\s+(.+?)\s+(?:with|against|to)\s+(.+?)\s*$/i);
-  const strategies = await generateStrategies(comparisonRequest ? comparisonRequest[1] : text, comparisonRequest?.[2]);
+  const comparisonRequest = comparisonCommand?.pair;
+  const strategies = await generateStrategies(comparisonRequest ? comparisonRequest[0] : text, comparisonRequest?.[1]);
   return { kind: 'strategy', ...strategies };
 }

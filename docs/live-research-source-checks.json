@@ -1,0 +1,26 @@
+[
+  {
+    "url": "https://www.undp.org/kazakhstan/stories/climate-change-impact-water-resources-kazakhstan",
+    "status": 200
+  },
+  {
+    "url": "https://www.undp.org/kazakhstan/publications/forecast-impact-climate-change-water-flow-changes-hydro-economic-basins-kazakhstan-2100",
+    "status": 200
+  },
+  {
+    "url": "https://www.worldbank.org/en/news/press-release/2022/11/03/climate-action-can-help-kazakhstan-diversify-its-economy-away-from-oil-and-create-new-drivers-of-growth-world-bank",
+    "status": 200
+  },
+  {
+    "url": "https://www.gov.kz/memleket/entities/economy/press/news/details/1264551",
+    "status": 200
+  },
+  {
+    "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/679229",
+    "status": 200
+  },
+  {
+    "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/910441?lang=ru",
+    "status": "network_timeout_or_error"
+  }
+]

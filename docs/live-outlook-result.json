@@ -1,0 +1,411 @@
+{
+  "sourceMode": "live",
+  "factors": [
+    {
+      "id": "research-climate-pressure",
+      "name": "Climate pressure",
+      "direction": "negative",
+      "strength": 0.55,
+      "confidence": 0.65,
+      "startYear": 2032,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "E1",
+        "E2",
+        "S2"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] By 2040, Kazakhstan may face significant water shortages, with a potential 50% deficit. Climate change exacerbates this issue, leading to reduced river flows and increased evaporation. For instance, the Ural River's water level has dropped threefold over the past 15 years, affecting water supply in cities like Uralsk. [2] Climate change is projected to reduce water flow in Kazakhstan's hydro-economic basins by the end of the century, except in the Balkhash-Alakol basin. This decline is due to glacier depletion and increased evaporation. Additionally, water consumption is expected to rise as irrigated agriculture expands from 1.8 million ha to 3 million ha by 2030. [3] Effective climate action in Kazakhstan could help diversify its economy away from oil dependence and open up new drivers of economic growth. The World Bank report emphasizes the need for deep decarbonization of the energy sector, which is responsible for over 80% of the country's carbon emissions. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "The climate change impact on water resources in Kazakhstan",
+          "url": "https://www.undp.org/kazakhstan/stories/climate-change-impact-water-resources-kazakhstan",
+          "publisher": "www.undp.org"
+        },
+        {
+          "title": "Forecast of the impact of climate change on water flow changes in the hydro-economic basins of Kazakhstan up to 2100",
+          "url": "https://www.undp.org/kazakhstan/publications/forecast-impact-climate-change-water-flow-changes-hydro-economic-basins-kazakhstan-2100",
+          "publisher": "www.undp.org"
+        },
+        {
+          "title": "Climate Action Can Help Kazakhstan Diversify its Economy Away from Oil and Create New Drivers of Growth: World Bank",
+          "url": "https://www.worldbank.org/en/news/press-release/2022/11/03/climate-action-can-help-kazakhstan-diversify-its-economy-away-from-oil-and-create-new-drivers-of-growth-world-bank",
+          "publisher": "www.worldbank.org"
+        }
+      ]
+    },
+    {
+      "id": "research-energy-utilities",
+      "name": "Energy and utility pressure",
+      "direction": "negative",
+      "strength": 0.5,
+      "confidence": 0.65,
+      "startYear": 2033,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "C1",
+        "E2"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] Effective climate action in Kazakhstan could help diversify its economy away from oil dependence and open up new drivers of economic growth. The World Bank report emphasizes the need for deep decarbonization of the energy sector, which is responsible for over 80% of the country's carbon emissions. [2] By 2029, Kazakhstan plans to reduce the deterioration of communal infrastructure by 40%. This initiative is part of the \"Energy and Communal Sector Modernization\" national project, aiming to modernize energy and utility infrastructure across the country. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "Climate Action Can Help Kazakhstan Diversify its Economy Away from Oil and Create New Drivers of Growth: World Bank",
+          "url": "https://www.worldbank.org/en/news/press-release/2022/11/03/climate-action-can-help-kazakhstan-diversify-its-economy-away-from-oil-and-create-new-drivers-of-growth-world-bank",
+          "publisher": "www.worldbank.org"
+        },
+        {
+          "title": "2029 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0420\u0454\u0420\u0455\u0420\u0458\u0420\u0458\u0421\u0453\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0491\u0421\u2039\u0422\u203a \u0420\u00b6\u0420\u00b5\u0420\u00bb\u0421\u2013\u0420\u00bb\u0420\u00b5\u0421\u0402\u0420\u0491\u0421\u2013\u0422\u0408 \u0421\u201a\u0420\u0455\u0420\u00b7\u0421\u0453\u0421\u2039\u0420\u0405 40%-\u0422\u201c\u0420\u00b0 \u0420\u0491\u0420\u00b5\u0420\u2116\u0421\u2013\u0420\u0405 \u0421\u201a\u0423\u00a9\u0420\u0458\u0420\u00b5\u0420\u0405\u0420\u0491\u0420\u00b5\u0421\u201a\u0421\u0453 \u0420\u00b6\u0420\u0455\u0421\u0403\u0420\u0457\u0420\u00b0\u0421\u0402\u0420\u00bb\u0420\u00b0\u0420\u0405\u0421\u0453\u0420\u0491\u0420\u00b0",
+          "url": "https://www.gov.kz/memleket/entities/economy/press/news/details/1264551",
+          "publisher": "www.gov.kz"
+        }
+      ]
+    },
+    {
+      "id": "research-population-demand",
+      "name": "Population and service demand",
+      "direction": "negative",
+      "strength": 0.65,
+      "confidence": 0.65,
+      "startYear": 2029,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "S1",
+        "S2",
+        "C1"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] Kazakhstan's working-age population is projected to increase by 28% by 2050, reaching 12 million people. This growth is expected to begin around 2028, with the workforce stabilizing at 9.5 million by 2026. [2] By 2050, Kazakhstan's urban population is expected to constitute 70% of the total, with urban areas growing by 57% to 19.3 million people. In contrast, the rural population is projected to increase by only 9% to 8.2 million by 2050. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "2050 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0420\u00b6\u0422\u00b1\u0420\u0458\u0421\u2039\u0421\u0403 \u0420\u0454\u0422\u0407\u0421\u20ac\u0421\u2013\u0420\u0405\u0421\u2013\u0422\u0408 \u0421\u0403\u0420\u00b0\u0420\u0405\u0421\u2039 28%-\u0422\u201c\u0420\u00b0 \u0423\u00a9\u0421\u0403\u0420\u00b5\u0420\u0491\u0421\u2013 \u0432\u0402\u201c \u0420\u00b0\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0451\u0421\u201a\u0420\u0451\u0420\u0454\u0421\u201a\u0420\u00b5\u0421\u0402",
+          "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/679229",
+          "publisher": "www.gov.kz"
+        },
+        {
+          "title": "\u0420\u045f\u0420\u0455 \u0420\u0458\u0420\u0405\u0420\u00b5\u0420\u0405\u0420\u0451\u0421\u040b \u0420\u00b0\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0451\u0421\u201a\u0420\u0451\u0420\u0454\u0420\u0455\u0420\u0406 \u0420\u00a6\u0420\u00a0\u0420\u045e\u0420\u00a0, 2050 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0420\u00bb\u0420\u00b0 \u0421\u2026\u0420\u00b0\u0420\u00bb\u0422\u203a\u0421\u2039\u0420\u0405\u0421\u2039\u0422\u0408 \u0422\u0407\u0420\u00bb\u0420\u00b5\u0421\u0403\u0421\u2013 70%",
+          "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/910441?lang=ru",
+          "publisher": "www.gov.kz"
+        }
+      ]
+    },
+    {
+      "id": "research-urban-expansion",
+      "name": "Urban expansion and digital access",
+      "direction": "mixed",
+      "strength": 0.5,
+      "confidence": 0.45,
+      "startYear": 2030,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "T1",
+        "E1",
+        "S1",
+        "C2"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] By 2050, Kazakhstan's urban population is expected to constitute 70% of the total, with urban areas growing by 57% to 19.3 million people. In contrast, the rural population is projected to increase by only 9% to 8.2 million by 2050. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "\u0420\u045f\u0420\u0455 \u0420\u0458\u0420\u0405\u0420\u00b5\u0420\u0405\u0420\u0451\u0421\u040b \u0420\u00b0\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0451\u0421\u201a\u0420\u0451\u0420\u0454\u0420\u0455\u0420\u0406 \u0420\u00a6\u0420\u00a0\u0420\u045e\u0420\u00a0, 2050 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0420\u00bb\u0420\u00b0 \u0421\u2026\u0420\u00b0\u0420\u00bb\u0422\u203a\u0421\u2039\u0420\u0405\u0421\u2039\u0422\u0408 \u0422\u0407\u0420\u00bb\u0420\u00b5\u0421\u0403\u0421\u2013 70%",
+          "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/910441?lang=ru",
+          "publisher": "www.gov.kz"
+        }
+      ]
+    },
+    {
+      "id": "research-water-stress",
+      "name": "Water stress",
+      "direction": "negative",
+      "strength": 0.6,
+      "confidence": 0.65,
+      "startYear": 2030,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "C1",
+        "E1"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] By 2040, Kazakhstan may face significant water shortages, with a potential 50% deficit. Climate change exacerbates this issue, leading to reduced river flows and increased evaporation. For instance, the Ural River's water level has dropped threefold over the past 15 years, affecting water supply in cities like Uralsk. [2] Climate change is projected to reduce water flow in Kazakhstan's hydro-economic basins by the end of the century, except in the Balkhash-Alakol basin. This decline is due to glacier depletion and increased evaporation. Additionally, water consumption is expected to rise as irrigated agriculture expands from 1.8 million ha to 3 million ha by 2030. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "The climate change impact on water resources in Kazakhstan",
+          "url": "https://www.undp.org/kazakhstan/stories/climate-change-impact-water-resources-kazakhstan",
+          "publisher": "www.undp.org"
+        },
+        {
+          "title": "Forecast of the impact of climate change on water flow changes in the hydro-economic basins of Kazakhstan up to 2100",
+          "url": "https://www.undp.org/kazakhstan/publications/forecast-impact-climate-change-water-flow-changes-hydro-economic-basins-kazakhstan-2100",
+          "publisher": "www.undp.org"
+        }
+      ]
+    }
+  ],
+  "scenarioFactors": [
+    {
+      "id": "research-climate-pressure",
+      "name": "Climate pressure",
+      "direction": "negative",
+      "strength": 0.55,
+      "confidence": 0.65,
+      "startYear": 2032,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "E1",
+        "E2",
+        "S2"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] By 2040, Kazakhstan may face significant water shortages, with a potential 50% deficit. Climate change exacerbates this issue, leading to reduced river flows and increased evaporation. For instance, the Ural River's water level has dropped threefold over the past 15 years, affecting water supply in cities like Uralsk. [2] Climate change is projected to reduce water flow in Kazakhstan's hydro-economic basins by the end of the century, except in the Balkhash-Alakol basin. This decline is due to glacier depletion and increased evaporation. Additionally, water consumption is expected to rise as irrigated agriculture expands from 1.8 million ha to 3 million ha by 2030. [3] Effective climate action in Kazakhstan could help diversify its economy away from oil dependence and open up new drivers of economic growth. The World Bank report emphasizes the need for deep decarbonization of the energy sector, which is responsible for over 80% of the country's carbon emissions. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "The climate change impact on water resources in Kazakhstan",
+          "url": "https://www.undp.org/kazakhstan/stories/climate-change-impact-water-resources-kazakhstan",
+          "publisher": "www.undp.org"
+        },
+        {
+          "title": "Forecast of the impact of climate change on water flow changes in the hydro-economic basins of Kazakhstan up to 2100",
+          "url": "https://www.undp.org/kazakhstan/publications/forecast-impact-climate-change-water-flow-changes-hydro-economic-basins-kazakhstan-2100",
+          "publisher": "www.undp.org"
+        },
+        {
+          "title": "Climate Action Can Help Kazakhstan Diversify its Economy Away from Oil and Create New Drivers of Growth: World Bank",
+          "url": "https://www.worldbank.org/en/news/press-release/2022/11/03/climate-action-can-help-kazakhstan-diversify-its-economy-away-from-oil-and-create-new-drivers-of-growth-world-bank",
+          "publisher": "www.worldbank.org"
+        }
+      ]
+    },
+    {
+      "id": "research-energy-utilities",
+      "name": "Energy and utility pressure",
+      "direction": "negative",
+      "strength": 0.5,
+      "confidence": 0.65,
+      "startYear": 2033,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "C1",
+        "E2"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] Effective climate action in Kazakhstan could help diversify its economy away from oil dependence and open up new drivers of economic growth. The World Bank report emphasizes the need for deep decarbonization of the energy sector, which is responsible for over 80% of the country's carbon emissions. [2] By 2029, Kazakhstan plans to reduce the deterioration of communal infrastructure by 40%. This initiative is part of the \"Energy and Communal Sector Modernization\" national project, aiming to modernize energy and utility infrastructure across the country. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "Climate Action Can Help Kazakhstan Diversify its Economy Away from Oil and Create New Drivers of Growth: World Bank",
+          "url": "https://www.worldbank.org/en/news/press-release/2022/11/03/climate-action-can-help-kazakhstan-diversify-its-economy-away-from-oil-and-create-new-drivers-of-growth-world-bank",
+          "publisher": "www.worldbank.org"
+        },
+        {
+          "title": "2029 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0420\u0454\u0420\u0455\u0420\u0458\u0420\u0458\u0421\u0453\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0491\u0421\u2039\u0422\u203a \u0420\u00b6\u0420\u00b5\u0420\u00bb\u0421\u2013\u0420\u00bb\u0420\u00b5\u0421\u0402\u0420\u0491\u0421\u2013\u0422\u0408 \u0421\u201a\u0420\u0455\u0420\u00b7\u0421\u0453\u0421\u2039\u0420\u0405 40%-\u0422\u201c\u0420\u00b0 \u0420\u0491\u0420\u00b5\u0420\u2116\u0421\u2013\u0420\u0405 \u0421\u201a\u0423\u00a9\u0420\u0458\u0420\u00b5\u0420\u0405\u0420\u0491\u0420\u00b5\u0421\u201a\u0421\u0453 \u0420\u00b6\u0420\u0455\u0421\u0403\u0420\u0457\u0420\u00b0\u0421\u0402\u0420\u00bb\u0420\u00b0\u0420\u0405\u0421\u0453\u0420\u0491\u0420\u00b0",
+          "url": "https://www.gov.kz/memleket/entities/economy/press/news/details/1264551",
+          "publisher": "www.gov.kz"
+        }
+      ]
+    },
+    {
+      "id": "research-population-demand",
+      "name": "Population and service demand",
+      "direction": "negative",
+      "strength": 0.65,
+      "confidence": 0.65,
+      "startYear": 2029,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "S1",
+        "S2",
+        "C1"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] Kazakhstan's working-age population is projected to increase by 28% by 2050, reaching 12 million people. This growth is expected to begin around 2028, with the workforce stabilizing at 9.5 million by 2026. [2] By 2050, Kazakhstan's urban population is expected to constitute 70% of the total, with urban areas growing by 57% to 19.3 million people. In contrast, the rural population is projected to increase by only 9% to 8.2 million by 2050. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "2050 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0420\u00b6\u0422\u00b1\u0420\u0458\u0421\u2039\u0421\u0403 \u0420\u0454\u0422\u0407\u0421\u20ac\u0421\u2013\u0420\u0405\u0421\u2013\u0422\u0408 \u0421\u0403\u0420\u00b0\u0420\u0405\u0421\u2039 28%-\u0422\u201c\u0420\u00b0 \u0423\u00a9\u0421\u0403\u0420\u00b5\u0420\u0491\u0421\u2013 \u0432\u0402\u201c \u0420\u00b0\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0451\u0421\u201a\u0420\u0451\u0420\u0454\u0421\u201a\u0420\u00b5\u0421\u0402",
+          "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/679229",
+          "publisher": "www.gov.kz"
+        },
+        {
+          "title": "\u0420\u045f\u0420\u0455 \u0420\u0458\u0420\u0405\u0420\u00b5\u0420\u0405\u0420\u0451\u0421\u040b \u0420\u00b0\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0451\u0421\u201a\u0420\u0451\u0420\u0454\u0420\u0455\u0420\u0406 \u0420\u00a6\u0420\u00a0\u0420\u045e\u0420\u00a0, 2050 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0420\u00bb\u0420\u00b0 \u0421\u2026\u0420\u00b0\u0420\u00bb\u0422\u203a\u0421\u2039\u0420\u0405\u0421\u2039\u0422\u0408 \u0422\u0407\u0420\u00bb\u0420\u00b5\u0421\u0403\u0421\u2013 70%",
+          "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/910441?lang=ru",
+          "publisher": "www.gov.kz"
+        }
+      ]
+    },
+    {
+      "id": "research-urban-expansion",
+      "name": "Urban expansion and digital access",
+      "direction": "mixed",
+      "strength": 0.5,
+      "confidence": 0.45,
+      "startYear": 2030,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "T1",
+        "E1",
+        "S1",
+        "C2"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] By 2050, Kazakhstan's urban population is expected to constitute 70% of the total, with urban areas growing by 57% to 19.3 million people. In contrast, the rural population is projected to increase by only 9% to 8.2 million by 2050. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "\u0420\u045f\u0420\u0455 \u0420\u0458\u0420\u0405\u0420\u00b5\u0420\u0405\u0420\u0451\u0421\u040b \u0420\u00b0\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0451\u0421\u201a\u0420\u0451\u0420\u0454\u0420\u0455\u0420\u0406 \u0420\u00a6\u0420\u00a0\u0420\u045e\u0420\u00a0, 2050 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0420\u00bb\u0420\u00b0 \u0421\u2026\u0420\u00b0\u0420\u00bb\u0422\u203a\u0421\u2039\u0420\u0405\u0421\u2039\u0422\u0408 \u0422\u0407\u0420\u00bb\u0420\u00b5\u0421\u0403\u0421\u2013 70%",
+          "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/910441?lang=ru",
+          "publisher": "www.gov.kz"
+        }
+      ]
+    },
+    {
+      "id": "research-water-stress",
+      "name": "Water stress",
+      "direction": "negative",
+      "strength": 0.6,
+      "confidence": 0.65,
+      "startYear": 2030,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "C1",
+        "E1"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] By 2040, Kazakhstan may face significant water shortages, with a potential 50% deficit. Climate change exacerbates this issue, leading to reduced river flows and increased evaporation. For instance, the Ural River's water level has dropped threefold over the past 15 years, affecting water supply in cities like Uralsk. [2] Climate change is projected to reduce water flow in Kazakhstan's hydro-economic basins by the end of the century, except in the Balkhash-Alakol basin. This decline is due to glacier depletion and increased evaporation. Additionally, water consumption is expected to rise as irrigated agriculture expands from 1.8 million ha to 3 million ha by 2030. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "The climate change impact on water resources in Kazakhstan",
+          "url": "https://www.undp.org/kazakhstan/stories/climate-change-impact-water-resources-kazakhstan",
+          "publisher": "www.undp.org"
+        },
+        {
+          "title": "Forecast of the impact of climate change on water flow changes in the hydro-economic basins of Kazakhstan up to 2100",
+          "url": "https://www.undp.org/kazakhstan/publications/forecast-impact-climate-change-water-flow-changes-hydro-economic-basins-kazakhstan-2100",
+          "publisher": "www.undp.org"
+        }
+      ]
+    }
+  ],
+  "comparisonFactors": [
+    {
+      "id": "research-climate-pressure",
+      "name": "Climate pressure",
+      "direction": "negative",
+      "strength": 0.55,
+      "confidence": 0.65,
+      "startYear": 2032,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "E1",
+        "E2",
+        "S2"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] By 2040, Kazakhstan may face significant water shortages, with a potential 50% deficit. Climate change exacerbates this issue, leading to reduced river flows and increased evaporation. For instance, the Ural River's water level has dropped threefold over the past 15 years, affecting water supply in cities like Uralsk. [2] Climate change is projected to reduce water flow in Kazakhstan's hydro-economic basins by the end of the century, except in the Balkhash-Alakol basin. This decline is due to glacier depletion and increased evaporation. Additionally, water consumption is expected to rise as irrigated agriculture expands from 1.8 million ha to 3 million ha by 2030. [3] Effective climate action in Kazakhstan could help diversify its economy away from oil dependence and open up new drivers of economic growth. The World Bank report emphasizes the need for deep decarbonization of the energy sector, which is responsible for over 80% of the country's carbon emissions. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "The climate change impact on water resources in Kazakhstan",
+          "url": "https://www.undp.org/kazakhstan/stories/climate-change-impact-water-resources-kazakhstan",
+          "publisher": "www.undp.org"
+        },
+        {
+          "title": "Forecast of the impact of climate change on water flow changes in the hydro-economic basins of Kazakhstan up to 2100",
+          "url": "https://www.undp.org/kazakhstan/publications/forecast-impact-climate-change-water-flow-changes-hydro-economic-basins-kazakhstan-2100",
+          "publisher": "www.undp.org"
+        },
+        {
+          "title": "Climate Action Can Help Kazakhstan Diversify its Economy Away from Oil and Create New Drivers of Growth: World Bank",
+          "url": "https://www.worldbank.org/en/news/press-release/2022/11/03/climate-action-can-help-kazakhstan-diversify-its-economy-away-from-oil-and-create-new-drivers-of-growth-world-bank",
+          "publisher": "www.worldbank.org"
+        }
+      ]
+    },
+    {
+      "id": "research-energy-utilities",
+      "name": "Energy and utility pressure",
+      "direction": "negative",
+      "strength": 0.5,
+      "confidence": 0.65,
+      "startYear": 2033,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "C1",
+        "E2"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] Effective climate action in Kazakhstan could help diversify its economy away from oil dependence and open up new drivers of economic growth. The World Bank report emphasizes the need for deep decarbonization of the energy sector, which is responsible for over 80% of the country's carbon emissions. [2] By 2029, Kazakhstan plans to reduce the deterioration of communal infrastructure by 40%. This initiative is part of the \"Energy and Communal Sector Modernization\" national project, aiming to modernize energy and utility infrastructure across the country. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "Climate Action Can Help Kazakhstan Diversify its Economy Away from Oil and Create New Drivers of Growth: World Bank",
+          "url": "https://www.worldbank.org/en/news/press-release/2022/11/03/climate-action-can-help-kazakhstan-diversify-its-economy-away-from-oil-and-create-new-drivers-of-growth-world-bank",
+          "publisher": "www.worldbank.org"
+        },
+        {
+          "title": "2029 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0420\u0454\u0420\u0455\u0420\u0458\u0420\u0458\u0421\u0453\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0491\u0421\u2039\u0422\u203a \u0420\u00b6\u0420\u00b5\u0420\u00bb\u0421\u2013\u0420\u00bb\u0420\u00b5\u0421\u0402\u0420\u0491\u0421\u2013\u0422\u0408 \u0421\u201a\u0420\u0455\u0420\u00b7\u0421\u0453\u0421\u2039\u0420\u0405 40%-\u0422\u201c\u0420\u00b0 \u0420\u0491\u0420\u00b5\u0420\u2116\u0421\u2013\u0420\u0405 \u0421\u201a\u0423\u00a9\u0420\u0458\u0420\u00b5\u0420\u0405\u0420\u0491\u0420\u00b5\u0421\u201a\u0421\u0453 \u0420\u00b6\u0420\u0455\u0421\u0403\u0420\u0457\u0420\u00b0\u0421\u0402\u0420\u00bb\u0420\u00b0\u0420\u0405\u0421\u0453\u0420\u0491\u0420\u00b0",
+          "url": "https://www.gov.kz/memleket/entities/economy/press/news/details/1264551",
+          "publisher": "www.gov.kz"
+        }
+      ]
+    },
+    {
+      "id": "research-population-demand",
+      "name": "Population and service demand",
+      "direction": "negative",
+      "strength": 0.65,
+      "confidence": 0.65,
+      "startYear": 2029,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "S1",
+        "S2",
+        "C1"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] Kazakhstan's working-age population is projected to increase by 28% by 2050, reaching 12 million people. This growth is expected to begin around 2028, with the workforce stabilizing at 9.5 million by 2026. [2] By 2050, Kazakhstan's urban population is expected to constitute 70% of the total, with urban areas growing by 57% to 19.3 million people. In contrast, the rural population is projected to increase by only 9% to 8.2 million by 2050. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "2050 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0420\u00b6\u0422\u00b1\u0420\u0458\u0421\u2039\u0421\u0403 \u0420\u0454\u0422\u0407\u0421\u20ac\u0421\u2013\u0420\u0405\u0421\u2013\u0422\u0408 \u0421\u0403\u0420\u00b0\u0420\u0405\u0421\u2039 28%-\u0422\u201c\u0420\u00b0 \u0423\u00a9\u0421\u0403\u0420\u00b5\u0420\u0491\u0421\u2013 \u0432\u0402\u201c \u0420\u00b0\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0451\u0421\u201a\u0420\u0451\u0420\u0454\u0421\u201a\u0420\u00b5\u0421\u0402",
+          "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/679229",
+          "publisher": "www.gov.kz"
+        },
+        {
+          "title": "\u0420\u045f\u0420\u0455 \u0420\u0458\u0420\u0405\u0420\u00b5\u0420\u0405\u0420\u0451\u0421\u040b \u0420\u00b0\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0451\u0421\u201a\u0420\u0451\u0420\u0454\u0420\u0455\u0420\u0406 \u0420\u00a6\u0420\u00a0\u0420\u045e\u0420\u00a0, 2050 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0420\u00bb\u0420\u00b0 \u0421\u2026\u0420\u00b0\u0420\u00bb\u0422\u203a\u0421\u2039\u0420\u0405\u0421\u2039\u0422\u0408 \u0422\u0407\u0420\u00bb\u0420\u00b5\u0421\u0403\u0421\u2013 70%",
+          "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/910441?lang=ru",
+          "publisher": "www.gov.kz"
+        }
+      ]
+    },
+    {
+      "id": "research-urban-expansion",
+      "name": "Urban expansion and digital access",
+      "direction": "mixed",
+      "strength": 0.5,
+      "confidence": 0.45,
+      "startYear": 2030,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "T1",
+        "E1",
+        "S1",
+        "C2"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] By 2050, Kazakhstan's urban population is expected to constitute 70% of the total, with urban areas growing by 57% to 19.3 million people. In contrast, the rural population is projected to increase by only 9% to 8.2 million by 2050. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "\u0420\u045f\u0420\u0455 \u0420\u0458\u0420\u0405\u0420\u00b5\u0420\u0405\u0420\u0451\u0421\u040b \u0420\u00b0\u0420\u0405\u0420\u00b0\u0420\u00bb\u0420\u0451\u0421\u201a\u0420\u0451\u0420\u0454\u0420\u0455\u0420\u0406 \u0420\u00a6\u0420\u00a0\u0420\u045e\u0420\u00a0, 2050 \u0420\u00b6\u0421\u2039\u0420\u00bb\u0422\u201c\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0421\u0402\u0420\u00b0\u0420\u2116 \u0422\u0459\u0420\u00b0\u0420\u00b7\u0420\u00b0\u0422\u203a\u0421\u0403\u0421\u201a\u0420\u00b0\u0420\u0405\u0420\u0491\u0420\u00b0 \u0422\u203a\u0420\u00b0\u0420\u00bb\u0420\u00b0 \u0421\u2026\u0420\u00b0\u0420\u00bb\u0422\u203a\u0421\u2039\u0420\u0405\u0421\u2039\u0422\u0408 \u0422\u0407\u0420\u00bb\u0420\u00b5\u0421\u0403\u0421\u2013 70%",
+          "url": "https://www.gov.kz/memleket/entities/enbek/press/news/details/910441?lang=ru",
+          "publisher": "www.gov.kz"
+        }
+      ]
+    },
+    {
+      "id": "research-water-stress",
+      "name": "Water stress",
+      "direction": "negative",
+      "strength": 0.6,
+      "confidence": 0.65,
+      "startYear": 2030,
+      "endYear": 2050,
+      "affectedMetrics": [
+        "C1",
+        "E1"
+      ],
+      "rationale": "Retrieved trend evidence (national findings may not describe individual Astana districts): [1] By 2040, Kazakhstan may face significant water shortages, with a potential 50% deficit. Climate change exacerbates this issue, leading to reduced river flows and increased evaporation. For instance, the Ural River's water level has dropped threefold over the past 15 years, affecting water supply in cities like Uralsk. [2] Climate change is projected to reduce water flow in Kazakhstan's hydro-economic basins by the end of the century, except in the Balkhash-Alakol basin. This decline is due to glacier depletion and increased evaporation. Additionally, water consumption is expected to rise as irrigated agriculture expands from 1.8 million ha to 3 million ha by 2030. Direction, strength and years are illustrative scenario assumptions, not source estimates or QoL predictions.",
+      "sources": [
+        {
+          "title": "The climate change impact on water resources in Kazakhstan",
+          "url": "https://www.undp.org/kazakhstan/stories/climate-change-impact-water-resources-kazakhstan",
+          "publisher": "www.undp.org"
+        },
+        {
+          "title": "Forecast of the impact of climate change on water flow changes in the hydro-economic basins of Kazakhstan up to 2100",
+          "url": "https://www.undp.org/kazakhstan/publications/forecast-impact-climate-change-water-flow-changes-hydro-economic-basins-kazakhstan-2100",
+          "publisher": "www.undp.org"
+        }
+      ]
+    }
+  ]
+}

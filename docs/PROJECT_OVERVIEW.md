@@ -107,6 +107,14 @@ The app is built with Next.js, TypeScript, Tailwind CSS, shadcn/ui and Recharts.
 Run locally:
 
 ```bash
-npm install
-npm run dev
+pnpm install --frozen-lockfile
+pnpm dev
 ```
+
+## Shipped interaction details
+
+Generated strategies arrive validated and confirmed in the review view. Manual selections and later edits need explicit confirmation. Both Run and Outlook-first request official analysis automatically for each new official result; analysis failure preserves numerical results and permits Outlook to continue.
+
+Comparison uses an explicit A/B picker. Named comparison commands prefill the requested pair; questions that merely mention comparison remain questions about the current result. Preparing a pair does not run the simulator.
+
+Research auto-selects Tavily when configured, otherwise OpenAI hosted web search; local/demo mode and provider failures use labelled demo factors. Current timeouts and cache behavior are documented in [Future Research](FUTURE_RESEARCH.md). Maintenance is assumed coverage (default 0.35), with no investment-linked increase or cost model. The 2050 view explores assumptions, not predictions. See [the current product flow](../README.md#product-flow).

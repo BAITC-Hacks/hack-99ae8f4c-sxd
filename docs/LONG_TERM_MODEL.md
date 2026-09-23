@@ -1,6 +1,6 @@
 # Conditional long-term scenarios
 
-This layer asks: **If these assumptions and external trends hold, how might this strategy evolve?** It does not predict Astana in 2050. The official eight-quarter simulator, official scoring formula, validator, Strategy Agent and frontend were not edited in this task.
+This layer asks: **If these assumptions and external trends hold, how might this strategy evolve?** It does not predict Astana in 2050. The official eight-quarter simulator and scoring formula remain separate from this scenario layer.
 
 The 2028 district indicators are copied exactly from the official result. The 2026 point is only a reference. Annual updates begin in 2029; checkpoints are 2028, 2030, 2035, 2040, 2045 and 2050.
 
@@ -82,4 +82,4 @@ Additional tests cover 30 overlapping full-strength factors of either sign, orde
 
 ## Validation
 
-Run `node --experimental-transform-types --test src/lib/outlook*.test.ts` for long-term tests and `node node_modules/typescript/bin/tsc --noEmit` for typecheck. The transform flag is needed by the workspace's research-provider code; package scripts were not edited. Full-suite results are recorded in `long-term-all-tests.txt`; typecheck output in `long-term-typecheck.txt`. Final validation: all 124 tests passed, including 19 long-term tests; typecheck passed. An earlier live-research integration failure disappeared after concurrent workspace changes outside this task. No research-provider or integration-test files were edited by this task.
+Run `pnpm test`, `pnpm typecheck` and `pnpm build` for current validation. Saved long-term result files describe historical runs, not the current acceptance status. The sensitivity grid above records the reviewed assumptions and portfolios; live research may provide different external factors. See [Future Research](FUTURE_RESEARCH.md) for current provider selection and timeouts.

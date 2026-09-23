@@ -1,4 +1,5 @@
 import { test } from 'node:test';
+import { generateLocalStrategy } from './agents/strategy.ts';
 import assert from 'node:assert/strict';
 import { getFutureFactors, createLiveResearchProvider, researchContext } from './agents/future-research.ts';
 import { cleanSources, createSearch, sourceURL } from './agents/future-search.ts';
@@ -7,18 +8,15 @@ import { POST } from '../app/api/research/route.ts';
 import type { Selection } from './simulator.ts';
 import type { FutureResearchProvider } from '../types/outlook.ts';
 
-const strategies: Selection[][] = [
-  [{ measureId: 'M1', districtId: 'nura' }, { measureId: 'M2' }, { measureId: 'M4', districtId: 'nura' }, { measureId: 'M9', districtId: 'nura' }, { measureId: 'M12' }],
-  [{ measureId: 'M7', districtId: 'nura' }, { measureId: 'M8', districtId: 'nura' }, { measureId: 'M10', districtId: 'nura' }, { measureId: 'M12' }, { measureId: 'M5', districtId: 'saryarka' }],
-  [{ measureId: 'M11', districtId: 'nura' }, { measureId: 'M4', districtId: 'nura' }, { measureId: 'M9', districtId: 'nura' }, { measureId: 'M12' }, { measureId: 'M14' }],
-];
+const strategyNames = ['Green Growth', 'Industrial-Mobility', 'Social Infrastructure First'];
+const strategies: (readonly Selection[])[] = strategyNames.map(name => generateLocalStrategy(name).selectedMeasures);
 // Synthetic search fixtures exercise the contract; they are not shipped research citations.
 function searchFixture() {
   const topics = ['population growth', 'climate warming', 'water stress', 'transport demand', 'infrastructure aging', 'energy demand', 'urban expansion'];
   return { results: topics.map((topic, i) => ({ title: `Synthetic ${topic} report`, url: `https://worldbank.org/research/fixture-${i}`,
     content: `Kazakhstan faces increasing ${topic} pressure over the coming decades, requiring additional planning and investment.`, published_date: '2024-01-01' })) };
 }
-for (const [i, strategy] of strategies.entries()) test(`live research strategy ${i + 1}: sourced, relevant, immutable`, async () => {
+for (const [i, strategy] of strategies.entries()) test(`live research ${strategyNames[i]}: sourced, relevant, immutable`, async () => {
   const official = runOfficialSimulation(strategy), before = structuredClone(official);
   const queries: string[] = [];
   const research = await getFutureFactors(official, createLiveResearchProvider(async q => { queries.push(q); return searchFixture(); }));
@@ -26,9 +24,9 @@ for (const [i, strategy] of strategies.entries()) test(`live research strategy $
   assert.equal(research.status, 'success');
   assert.ok(research.factors.length >= 3 && research.factors.length <= 6);
   assert.ok(research.factors.every(f => f.sources.length >= 1 && f.sources.length <= 3));
-  assert.ok(queries.every(q => researchContext(official).affectedCategories.every(c => q.includes(c))));
+  assert.ok(queries.every(q => q.includes('Astana Kazakhstan') && q.includes('long term')));
   assert.deepEqual(official, before);
-  if (i === 1) assert.ok(!research.factors.some(f => f.id === 'research-transport-demand'));
+  if (!researchContext(official).affectedCategories.includes('Transport')) assert.ok(!research.factors.some(f => f.id === 'research-transport-demand'));
 });
 test('source validation rejects spoofed hosts and deduplicates normalized citations', () => {
   for (const url of ['javascript:alert(1)', 'https://worldbank.org.evil.test/report', 'https://localhost/report', 'https://user@worldbank.org/report', 'https://worldbank.org/', 'http://worldbank.org/report']) assert.equal(sourceURL(url), undefined);
@@ -80,8 +78,9 @@ test('search bounds hung requests and does not retry auth failures or malformed 
   }
 });
 test('research route rejects bad input and returns explicit fallback without configuration', async () => {
-  const key = process.env.TAVILY_API_KEY;
+  const env = { ...process.env };
   delete process.env.TAVILY_API_KEY;
+  delete process.env.OPENAI_API_KEY;
   try {
     for (const body of ['{bad', '{}', '{"officialResult":null}']) {
       const result = await POST(new Request('http://localhost/api/research', { method: 'POST', body }));
@@ -92,5 +91,34 @@ test('research route rejects bad input and returns explicit fallback without con
     const body = await result.json();
     assert.equal(body.sourceMode, 'demo');
     assert.equal(body.failure.code, 'not_configured');
-  } finally { if (key !== undefined) process.env.TAVILY_API_KEY = key; }
+  } finally { process.env = env; }
+});
+
+test('auto adapter uses OPENAI_API_KEY through the real research route; local mode disables it', async t => {
+  const env = { ...process.env };
+  t.after(() => { process.env = env; });
+  delete process.env.TAVILY_API_KEY;
+  process.env.OPENAI_API_KEY = 'search-test-key';
+  process.env.FARSIGHT_RESEARCH_PROVIDER = 'auto';
+  process.env.FARSIGHT_AI_MODE = 'auto';
+  const fixture = searchFixture();
+  const network = t.mock.method(globalThis, 'fetch', async () => Response.json({ status: 'completed', output: [
+    {type:'web_search_call',status:'completed',action:{sources:fixture.results.map(row => ({url:row.url}))}},
+    {type:'message',content:[{type:'output_text',text:JSON.stringify(fixture)}]},
+  ] }));
+  const request = () => new Request('http://localhost/api/research', { method:'POST',body:JSON.stringify({officialResult:runOfficialSimulation(strategies[0])}) });
+  const result = await (await POST(request())).json();
+  assert.equal(result.sourceMode,'live');
+  assert.equal(result.provider,'openai-web-search-v1');
+  assert.equal(network.mock.callCount(),1);
+  process.env.FARSIGHT_AI_MODE = 'local';
+  assert.equal((await (await POST(request())).json()).sourceMode,'demo');
+  assert.equal(network.mock.callCount(),1);
+});
+
+test('topic and trend can follow the geography sentence in retrieved evidence', async () => {
+  const fixture = searchFixture();
+  fixture.results = fixture.results.map(row => ({...row,content:row.content.replace('Kazakhstan faces', 'This report studies Kazakhstan. The country faces')}));
+  const result = await getFutureFactors(runOfficialSimulation(strategies[0]),createLiveResearchProvider(async () => fixture));
+  assert.equal(result.sourceMode,'live');
 });

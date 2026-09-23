@@ -81,3 +81,18 @@ test('explanation context is validated by the official engine', async () => {
   const response = await POST(request({ message: 'Why is baseline change positive?', selectedMeasures: [{ measureId: 'invented' }] }));
   assert.equal(response.status, 422);
 });
+
+test('explanatory comparison questions answer about the active result', async () => {
+  const selectedMeasures = [{ measureId: 'M2' }, { measureId: 'M6' },
+    { measureId: 'M4', districtId: 'esil' }, { measureId: 'M10', districtId: 'almaty' },
+    { measureId: 'M7', districtId: 'saryarka' }];
+  for (const message of ['Why does my strategy compare better than baseline?', 'Explain the comparison with baseline',
+    'How does my strategy compare to baseline?', 'Почему моя стратегия лучше в сравнении с базовой?']) {
+    const response = await POST(request({ message, selectedMeasures }));
+    assert.equal(response.status, 200);
+    const data = await response.json();
+    assert.equal(data.kind, 'answer');
+    assert.equal('strategyA' in data, false);
+    assert.match(data.message, /54\.01/);
+  }
+});

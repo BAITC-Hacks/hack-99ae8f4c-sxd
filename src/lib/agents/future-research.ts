@@ -55,7 +55,7 @@ export function createLiveResearchProvider(search: (query: string) => Promise<un
         b.factor.affectedMetrics.filter(m => outcomes.includes(m)).length - a.factor.affectedMetrics.filter(m => outcomes.includes(m)).length);
       const results = await Promise.allSettled(candidates.map(async ({ factor }) => {
         const id = factor.id.replace('demo-', '');
-        const response = await search(`Astana Kazakhstan ${factor.name} long term trends pressure growth research ${context.affectedCategories.join(' ')} districts ${context.affectedDistricts.join(' ')}`);
+        const response = await search(`Astana Kazakhstan ${factor.name} long term trends pressure growth research`);
         if (!response || typeof response !== 'object' || !Array.isArray((response as { results?: unknown }).results)) return;
         const evidence: { source: FutureFactor['sources'][number]; excerpt: string }[] = [];
         for (const row of (response as { results: unknown[] }).results.slice(0, 20)) {
@@ -63,8 +63,11 @@ export function createLiveResearchProvider(search: (query: string) => Promise<un
           const item = row as Record<string, unknown>;
           const source = cleanSources([{ ...item, publishedAt: item.published_date }])[0];
           if (!source || typeof item.content !== 'string' || item.content.length > 30_000) continue;
-          const sentence = item.content.replace(/<[^>]*>/g, '').split(/(?<=[.!?])\s+|\n/).find(text =>
-            text.length >= 60 && text.length <= 900 && /Astana|Kazakhstan|Nur.Sultan/i.test(text)
+          const excerpt = item.content.replace(/\(\[[^\]]+\]\(https?:[^)]+\)\)/g, '').replace(/<[^>]*>/g, '').trim();
+          // Geography often appears in the preceding sentence. Match a bounded paragraph,
+          // not a single sentence requiring geography, topic and trend simultaneously.
+          const sentence = excerpt.split(/\n+/).find(text =>
+            text.length >= 60 && text.length <= 1500 && /Astana|Kazakhstan|Nur.Sultan/i.test(excerpt)
             && topics[id]?.test(text) && trend.test(text) && !forbiddenPrediction.test(text));
           if (sentence && !evidence.some(e => e.source.url === source.url)) evidence.push({ source, excerpt: sentence.trim() });
           if (evidence.length === 3) break;
@@ -77,7 +80,9 @@ export function createLiveResearchProvider(search: (query: string) => Promise<un
           sources: evidence.map(e => e.source),
         } satisfies FutureFactor;
       }));
-      return results.flatMap(result => result.status === 'fulfilled' && result.value ? [result.value] : []);
+      const factors = results.flatMap(result => result.status === 'fulfilled' && result.value ? [result.value] : []);
+      console.info('[Future Research]', { provider: providerId, stage: 'extraction', factors: factors.length, failedQueries: results.filter(r => r.status === 'rejected').length });
+      return factors;
     },
   };
 }

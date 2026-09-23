@@ -1,12 +1,15 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { RequestSession } from "@/lib/request-session";
-import type { AnalysisResponse, SimulationResponse } from "@/types/api";
-import { Activity, AlertCircle, ArrowRight, ArrowUpRight, Building2, BusFront, ChevronDown, ChevronRight, GitCompareArrows, HeartHandshake, Landmark, Layers3, Leaf, LoaderCircle, ShieldCheck } from "lucide-react";
+import type { AnalysisResponse } from "@/types/api";
+import { comparisonIntent } from "@/lib/comparison-intent";
+import { simulateWithAnalysis } from "@/lib/official-workflow";
+import { Activity, AlertCircle, ArrowRight, ArrowUpRight, Building2, BusFront, ChevronDown, ChevronRight, GitCompareArrows, HeartHandshake, Leaf, LoaderCircle, ShieldCheck } from "lucide-react";
 import type { AnalysisReport, CopilotResponse, GeneratedStrategy, OutlookResponse, StrategyResponse } from "@/types/product";
 import type { SimulationResult } from "@/lib/simulator";
 import { scoreCity } from "@/lib/scoring";
 import { DISTRICTS } from "@/data";
+import { ComparisonPicker, type ComparisonChoice } from "./ComparisonPicker";
 import { ChatSidebar } from "./ChatSidebar";
 import { CategoryMetric } from "./CategoryMetric";
 import { MetricCard } from "./MetricCard";
@@ -58,7 +61,9 @@ export function FarsightWorkspace() {
   const [selected, setSelected] = useState<Key>("a");
   const [pending, setPending] = useState<Pending>(null);
   const [error, setError] = useState<string | null>(null);
-  const [comparisonInput, setComparisonInput] = useState("");
+  const [outlookError, setOutlookError] = useState<string | null>(null);
+  const [comparisonOpen, setComparisonOpen] = useState(false);
+  const [comparisonRequest, setComparisonRequest] = useState<{ pair?: [string, string]; version: number }>({ version: 0 });
   const [outlookOpen, setOutlookOpen] = useState(false);
   const busy = pending !== null;
   const current = selected === "a" ? strategies?.strategyA : strategies?.strategyB;
@@ -70,69 +75,97 @@ export function FarsightWorkspace() {
   const dirty = drafts[selected] !== undefined;
   const anyDirty = drafts.a !== undefined || drafts.b !== undefined;
   useEffect(() => {
-    if (results.a) document.getElementById("official-title")?.scrollIntoView({ block: "start" });
+    if (results.a && !outlookOpen) document.getElementById("official-title")?.scrollIntoView({ block: "start" });
   }, [results]);
 
   function clearResults() { setResults({}); setAnalyses({}); setOutlooks({}); setOutlookOpen(false); }
-  function reset() { session.current.reset(); setPending(null); setBuilderVersion(v => v + 1); setStrategies(null); setDrafts({ a: [] }); clearResults(); setSelected("a"); setComparisonInput(""); setError(null); }
+  function reset() { session.current.reset(); setPending(null); setBuilderVersion(v => v + 1); setStrategies(null); setDrafts({ a: [] }); clearResults(); setSelected("a"); setComparisonOpen(false); setError(null); setOutlookError(null); }
   function editDecisions(selections: StrategySelection[]) {
     setDrafts(previous => ({ ...previous, [selected]: selections }));
-    clearResults(); setError(null);
+    clearResults(); setError(null); setOutlookError(null);
   }
   function applyDecisions() {
     try {
       const strategy = createManualStrategy(draft, `My city strategy ${selected.toUpperCase()}`);
       setStrategies(previous => selected === 'a' ? { ...previous, strategyA: strategy } : { strategyA: previous!.strategyA, strategyB: strategy });
       setDrafts(previous => { const next = { ...previous }; delete next[selected]; return next; });
-      clearResults(); setError(null);
+      clearResults(); setError(null); setOutlookError(null);
     } catch (failure) { setError(errorMessage(failure)); }
   }
+  function openComparison(pair?: [string, string]) {
+    if (busy) return;
+    setComparisonRequest(previous => ({ pair, version: previous.version + 1 }));
+    setComparisonOpen(true);
+    window.requestAnimationFrame(() => {
+      const picker = document.getElementById("comparison-picker");
+      picker?.scrollIntoView({ behavior: "smooth", block: "start" });
+      picker?.focus({ preventScroll: true });
+    });
+  }
   async function generate(text: string) {
+    const comparison = comparisonIntent(text);
+    if (comparison) {
+      openComparison(comparison.pair);
+      return "Choose strategy A and strategy B in the comparison form, then confirm the pair. Nothing has been replaced or compared yet.";
+    }
     const token = session.current.begin();
     if (token === undefined) return "A request is already in progress.";
-    setPending("strategy"); setError(null);
+    setPending("strategy"); setError(null); setOutlookError(null);
     try {
       const data = await post<CopilotResponse>("/api/copilot", { message: text, ...(!anyDirty && current ? { selectedMeasures: current.selectedMeasures, ...(other ? { comparisonMeasures: other.selectedMeasures } : {}) } : {}) });
       if (!session.current.isCurrent(token)) return "This session was reset.";
       if (data.kind === "answer") return data.message;
-      clearResults(); setStrategies(data); setDrafts({}); setBuilderVersion(v => v + 1); setSelected("a"); setComparisonInput("");
+      clearResults(); setStrategies(data); setDrafts({}); setBuilderVersion(v => v + 1); setSelected("a"); setComparisonOpen(false);
       const names = [data.strategyA.name, data.strategyB?.name].filter(Boolean).join(" and ");
       return `${names} ${data.strategyB ? "are" : "is"} ready. Each strategy has five validated catalog measures. Review the measures and budget, then run the Official 2-Year Simulation. ${data.strategyA.generation.note}`;
     } catch (failure) { if (session.current.isCurrent(token)) setError(errorMessage(failure)); throw failure; }
     finally { if (session.current.finish(token)) setPending(null); }
   }
-  async function compare() {
-    const comparisonIntent = comparisonInput.trim();
-    if (!strategies || !comparisonIntent || busy || anyDirty) return;
+  async function compare(choices: [ComparisonChoice, ComparisonChoice]) {
+    if (busy || (strategies && anyDirty)) return;
     const token = session.current.begin();
     if (token === undefined) return;
-    setPending("strategy"); setError(null);
+    setPending("strategy"); setError(null); setOutlookError(null);
     try {
-      const data = await post<StrategyResponse>("/api/strategy", { intent: comparisonIntent });
+      const resolve = async (choice: ComparisonChoice) => "strategy" in choice ? choice.strategy : (await post<StrategyResponse>("/api/strategy", { intent: choice.intent })).strategyA;
+      const [strategyA, strategyB] = await Promise.all(choices.map(resolve));
       if (!session.current.isCurrent(token)) return;
-      // Keep the current strategy byte-for-byte: only the alternative is generated.
-      setStrategies({ strategyA: strategies.strategyA, strategyB: data.strategyA });
-      clearResults(); setSelected("a"); setComparisonInput("");
+      const signature = (strategy: GeneratedStrategy) => JSON.stringify(strategy.selectedMeasures.map(measure => [measure.measureId, measure.districtId ?? ""]).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b))));
+      if (signature(strategyA) === signature(strategyB)) throw new Error("Both strategies contain the same decisions. Choose different priorities or districts to compare.");
+      setStrategies({ strategyA, strategyB }); setDrafts({}); setBuilderVersion(v => v + 1);
+      clearResults(); setSelected("a"); setComparisonOpen(false);
+      window.requestAnimationFrame(() => document.getElementById("strategies-title")?.scrollIntoView({ behavior: "smooth", block: "start" }));
     } catch (failure) { if (session.current.isCurrent(token)) setError(errorMessage(failure)); }
     finally { if (session.current.finish(token)) setPending(null); }
+  }
+  async function createOfficialResults(token: number, keys: Key[]) {
+    if (!strategies) return;
+    const completed = await Promise.allSettled(keys.map(async key => {
+      const strategy = key === "a" ? strategies.strategyA : strategies.strategyB;
+      const comparison = key === "a" ? strategies.strategyB : strategies.strategyA;
+      if (!strategy) return;
+      await simulateWithAnalysis({
+        post, selectedMeasures: strategy.selectedMeasures, comparisonMeasures: comparison?.selectedMeasures,
+        isCurrent: () => session.current.isCurrent(token),
+        onResult: value => {
+          setResults(previous => ({ ...previous, [key]: value }));
+          setPending(previous => previous === "simulation" ? "analysis" : previous);
+        },
+        onAnalysis: value => setAnalyses(previous => ({ ...previous, [key]: value })),
+        onAnalysisError: () => setError("An explanation is unavailable. Your official numerical results are ready. Use Explain to retry."),
+      });
+    }));
+    const failed = completed.find(item => item.status === "rejected");
+    if (failed?.status === "rejected") throw failed.reason;
   }
   async function simulate() {
     if (!strategies || busy || anyDirty) return;
     const token = session.current.begin();
     if (token === undefined) return;
-    setPending("simulation"); setError(null);
+    setPending("simulation"); setError(null); setOutlookError(null);
     try {
-      const simulateOne = (strategy: GeneratedStrategy) => post<SimulationResponse>("/api/simulate", { selectedMeasures: strategy.selectedMeasures });
-      const [a, b] = await Promise.all([simulateOne(strategies.strategyA), strategies.strategyB ? simulateOne(strategies.strategyB) : Promise.resolve(undefined)]);
-      if (!session.current.isCurrent(token)) return;
-      setAnalyses({}); setOutlooks({}); setOutlookOpen(false);
-      setResults({ a: a.result, ...(b ? { b: b.result } : {}) });
-      setPending("analysis");
-      const analyzeOne = (strategy: GeneratedStrategy, comparison?: GeneratedStrategy) => post<AnalysisResponse>("/api/analyze", { selectedMeasures: strategy.selectedMeasures, ...(comparison ? { comparisonMeasures: comparison.selectedMeasures } : {}) });
-      const [analysisA, analysisB] = await Promise.allSettled([analyzeOne(strategies.strategyA, strategies.strategyB), strategies.strategyB ? analyzeOne(strategies.strategyB, strategies.strategyA) : Promise.resolve(undefined)]);
-      if (!session.current.isCurrent(token)) return;
-      setAnalyses({ ...(analysisA.status === 'fulfilled' && analysisA.value ? { a: analysisA.value.analysis } : {}), ...(analysisB.status === 'fulfilled' && analysisB.value ? { b: analysisB.value.analysis } : {}) });
-      if (analysisA.status === 'rejected' || analysisB.status === 'rejected') setError("An explanation is unavailable. Your official numerical results are ready. Use Explain to retry.");
+      clearResults();
+      await createOfficialResults(token, strategies.strategyB ? ["a", "b"] : ["a"]);
     } catch (failure) { if (session.current.isCurrent(token)) setError(errorMessage(failure)); }
     finally { if (session.current.finish(token)) setPending(null); }
   }
@@ -140,7 +173,7 @@ export function FarsightWorkspace() {
     if (!current || !result) throw new Error("Run the official simulation before asking about the result.");
     const token = session.current.begin();
     if (token === undefined) return "A request is already in progress.";
-    setPending("analysis"); setError(null);
+    setPending("analysis"); setError(null); setOutlookError(null);
     try {
       const data = await post<AnalysisResponse>("/api/analyze", { selectedMeasures: current.selectedMeasures, ...(question ? { question } : {}), ...(other ? { comparisonMeasures: other.selectedMeasures } : {}) });
       if (!session.current.isCurrent(token)) return "This session was reset.";
@@ -150,20 +183,32 @@ export function FarsightWorkspace() {
     finally { if (session.current.finish(token)) setPending(null); }
   }
   async function loadOutlook() {
-    if (!current || !result || busy) return;
+    if (busy) return;
+    if (!current || anyDirty) {
+      setOutlookError(!current
+        ? "Choose and confirm a strategy before exploring 2050."
+        : "Apply your strategy changes before exploring 2050.");
+      document.getElementById("explore-2050")?.focus();
+      return;
+    }
+    setOutlookError(null);
     setOutlookOpen(true);
+    window.requestAnimationFrame(() => document.getElementById("outlook-content")?.scrollIntoView({ behavior: "smooth", block: "start" }));
     if (outlooks[selected]) return;
     const token = session.current.begin();
     if (token === undefined) return;
     setPending("outlook"); setError(null);
     try {
+      const missing = ([selected, ...(other ? [otherKey] : [])] as Key[]).filter(key => !results[key]);
+      await createOfficialResults(token, missing);
+      if (!session.current.isCurrent(token)) return;
       const data = await post<OutlookResponse>("/api/outlook", { selectedMeasures: current.selectedMeasures, ...(other ? { comparisonMeasures: other.selectedMeasures } : {}) });
       if (!session.current.isCurrent(token)) return;
       setOutlooks(previous => ({ ...previous, [selected]: data }));
-    } catch (failure) { if (session.current.isCurrent(token)) setError(`Future Outlook unavailable. Your official result is still available. ${errorMessage(failure)}`); }
+    } catch (failure) { if (session.current.isCurrent(token)) setError(`Future Outlook unavailable. Please retry. ${errorMessage(failure)}`); }
     finally { if (session.current.finish(token)) setPending(null); }
   }
-  function select(key: Key) { if (busy) return; setSelected(key); setOutlookOpen(false); setError(null); }
+  function select(key: Key) { if (busy) return; setSelected(key); setOutlookOpen(false); setError(null); setOutlookError(null); }
   async function showExplanation() {
     if (!analyses[selected]) {
       try { await explain(); } catch { return; }
@@ -177,13 +222,15 @@ export function FarsightWorkspace() {
   const officialSimulation = <OfficialSimulation result={result} comparison={results[otherKey]} name={current?.name} comparisonName={other?.name} selected={selected} hasStrategy={Boolean(strategies) && !anyDirty} hasComparison={Boolean(strategies?.strategyB)} busy={busy} pending={pending} onRun={() => void simulate()} onExplain={() => void showExplanation()} />;
 
   return <div className="dashboard-shell farsight-workspace">
-    <ChatSidebar busy={busy} canExplain={Boolean(result)} onGenerate={generate} onExplain={explain} onReset={reset} strategyBuilder={<DecisionEditor key={`${selected}-${builderVersion}`} selections={draft} busy={busy} dirty={dirty} variant={selected} onChange={editDecisions} onApply={applyDecisions} onRun={() => void simulate()} canRun={Boolean(strategies) && !anyDirty} />} />
-    <main className="workspace"><header className="workspace-header"><div className="breadcrumb"><Landmark size={14} /><span>Astana</span><ChevronRight size={12} /><strong>Strategy workspace</strong></div><span className="preview-indicator"><span className="status-dot" />Official model connected</span></header>
-      <div className="workspace-content"><div className="page-heading"><div><div className="eyebrow city-eyebrow"><span className="status-dot" />ASTANA · A BETTER TOMORROW</div><h1>Small decisions.<br /><span>A better city.</span></h1><p>Choose five initiatives with a budget of 100. See how your decisions change the city.</p></div><div className="heading-actions"><div className="scenario-badge"><Layers3 size={14} />Planning horizon · 2026–2028</div>{!strategies && <Button disabled={busy} onClick={() => void generate('Create an Industrial-Mobility strategy and compare it with Green Growth.').catch(() => undefined)}>Create a comparison <ArrowUpRight size={16} /></Button>}{result && <Button variant="outline" disabled={busy} onClick={() => outlookOpen ? setOutlookOpen(false) : void loadOutlook()}>{outlookOpen ? "Hide 2050 outlook" : "Explore 2050 outlook"}<ArrowUpRight size={16} /></Button>}</div></div>
+    <ChatSidebar onCompare={() => openComparison()} busy={busy} canExplain={Boolean(result)} onGenerate={generate} onExplain={explain} onReset={reset} strategyBuilder={<DecisionEditor key={`${selected}-${builderVersion}`} selections={draft} busy={busy} dirty={dirty} variant={selected} onChange={editDecisions} onApply={applyDecisions} onRun={() => void simulate()} canRun={Boolean(strategies) && !anyDirty} />} />
+    <main className="workspace">
+      <div className="workspace-content"><div className="workspace-hero"><div className="page-heading"><div><div className="eyebrow city-eyebrow"><span className="status-dot" />ASTANA · A BETTER TOMORROW</div><h1>Small decisions.<br /><span>A better city.</span></h1><p>Choose five initiatives with a budget of 100. See how your decisions change the city.</p></div><div className="heading-actions"><Button disabled={busy} onClick={() => openComparison()}>Compare strategies <ArrowUpRight size={16} /></Button><Button id="explore-2050" variant="outline" className={outlookError ? "outlook-action-error" : undefined} aria-describedby={outlookError ? "outlook-validation" : undefined} aria-controls="outlook-content" aria-expanded={outlookOpen} disabled={busy} onClick={() => void loadOutlook()}>{pending === "outlook" ? "Researching 2050…" : "Explore 2050 outlook"}<ArrowUpRight size={16} /></Button>{outlookError && <p id="outlook-validation" className="outlook-validation" role="alert">{outlookError}</p>}</div></div>
+        {comparisonOpen && <ComparisonPicker key={comparisonRequest.version} initialIntents={comparisonRequest.pair} strategies={strategies} busy={busy} dirty={anyDirty} onConfirm={compare} onCancel={() => setComparisonOpen(false)} />}
         <div className="kpi-grid" aria-label="Official model overview">
           <MetricCard label="Current Astana QoL" value={baselineScore.toFixed(2)} note="2026 · calculated official baseline" icon={Activity} />
           <MetricCard label="Strategy A · 2028 QoL" value={results.a ? results.a.finalScore.toFixed(2) : "—"} note={results.a ? "Official two-year result" : "Awaiting official simulation"} icon={ArrowUpRight} tone="a" />
           <MetricCard label="Strategy B · 2028 QoL" value={results.b ? results.b.finalScore.toFixed(2) : "—"} note={results.b ? "Official two-year result" : "Awaiting comparison simulation"} icon={ArrowUpRight} tone="b" />
+        </div>
         </div>
         <ol className="flow-steps" aria-label="Strategy workflow"><li className={strategies ? "complete" : "active"}>1 <span>Choose five decisions</span></li><ArrowRight aria-hidden="true" size={13} /><li className={result ? "complete" : strategies ? "active" : ""}>2 <span>Run official simulation</span></li><ArrowRight aria-hidden="true" size={13} /><li className={analyses[selected] ? "complete" : result ? "active" : ""}>3 <span>Explain &amp; compare</span></li></ol>
         {error && <div className="error-banner" role="alert"><AlertCircle size={17} /><div><strong>Request could not be completed</strong><p>{error}</p></div><button aria-label="Dismiss error" onClick={() => setError(null)}>×</button></div>}
@@ -195,11 +242,11 @@ export function FarsightWorkspace() {
           {analyses[selected] && <section id="official-analysis" tabIndex={-1} aria-label="Official result explanation"><AnalysisPanel report={analyses[selected]} /></section>}
         </>}
         {strategies && <section aria-labelledby="strategies-title"><div className="comparison-heading"><h2 id="strategies-title"><GitCompareArrows size={16} />{anyDirty ? "Last confirmed decisions · edits pending" : strategies.strategyB ? "Strategy comparison" : "Your validated strategy"}</h2><span>5 measures · up to 100 budget · at most 2 per category</span></div><div className={`strategy-grid ${strategies.strategyB ? "" : "single-strategy"}`}><StrategyCard variant="a" strategy={strategies.strategyA} score={results.a?.finalScore} selected={selected === "a"} disabled={busy} onSelect={() => select("a")} />{strategies.strategyB && <StrategyCard variant="b" strategy={strategies.strategyB} score={results.b?.finalScore} selected={selected === "b"} disabled={busy} onSelect={() => select("b")} />}</div>
-          <form className="comparison-form" onSubmit={event => { event.preventDefault(); void compare(); }}><label htmlFor="comparison-intent">{strategies.strategyB ? "Replace comparison strategy" : "Compare with another strategy"}</label><div><input id="comparison-intent" value={comparisonInput} disabled={busy} onChange={event => setComparisonInput(event.target.value)} maxLength={2000} placeholder="e.g. Green Growth focused on Nura" /><Button variant="outline" type="submit" disabled={busy || anyDirty || !comparisonInput.trim()}><GitCompareArrows size={14} />Compare</Button></div></form>
+          <Button variant="outline" disabled={busy} onClick={() => openComparison()}><GitCompareArrows size={14} />Choose two strategies to compare</Button>
         </section>}
         {!result && officialSimulation}
-        <section className="outlook-section" aria-labelledby="outlook-title"><button className="outlook-toggle" disabled={busy || !result} aria-expanded={outlookOpen} aria-controls="outlook-content" onClick={() => outlookOpen ? setOutlookOpen(false) : void loadOutlook()}><span>{outlookOpen ? <ChevronDown size={19} /> : <ChevronRight size={19} />}<span><strong id="outlook-title">2050 Scenario Outlook</strong><small>{result ? "Optional · explore research factors and long-term assumptions" : "Optional · available after the official simulation"}</small></span></span><span className="subtle-badge">Separate scenario model</span></button>
-          {outlookOpen && <div id="outlook-content" className="outlook-content">{pending === "outlook" && <div className="loading-state" role="status"><LoaderCircle className="spin" size={20} />Loading long-term factors and calculating scenario checkpoints…</div>}
+        <section className="outlook-section" aria-labelledby="outlook-title"><button className="outlook-toggle" disabled={busy} aria-expanded={outlookOpen} aria-controls="outlook-content" onClick={() => outlookOpen ? setOutlookOpen(false) : void loadOutlook()}><span>{outlookOpen ? <ChevronDown size={19} /> : <ChevronRight size={19} />}<span><strong id="outlook-title">2050 Scenario Outlook</strong><small>{current && !anyDirty ? "Explore research factors and long-term assumptions" : "Choose and confirm a strategy to explore 2050"}</small></span></span><span className="subtle-badge">Separate scenario model</span></button>
+          {outlookOpen && <div id="outlook-content" className="outlook-content">{pending === "outlook" && <div className="loading-state" role="status"><LoaderCircle className="spin" size={20} />Running the research agent and calculating your strategy through 2050…</div>}
             {!outlook && pending !== "outlook" && <Button variant="outline" onClick={() => void loadOutlook()} disabled={busy}>Retry outlook</Button>}
             {outlook && current && <><div className="research-notice"><span className="subtle-badge">{outlook.research.mode === "demo" ? "Demo research factors" : "Live research factors"}</span><p>{outlook.research.notice}</p><p>The scenario indicator index is separate from the official Astana Quality of Life Score. The official 2028 result remains {result?.finalScore.toFixed(2)}.</p></div>
               <section className="primary-trajectory" aria-label="Optional 2050 scenario visualization">

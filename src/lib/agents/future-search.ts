@@ -63,7 +63,7 @@ export function createSearch(apiKey: string, fetcher: typeof fetch = fetch, time
                   include_answer: false, include_raw_content: false }),
               });
             } catch { throw new ResearchFailure('Search connection failed', true); }
-            if (!response.ok) throw new ResearchFailure('Search request failed', response.status === 429 || response.status >= 500);
+            if (!response.ok) throw new ResearchFailure(`Search HTTP ${response.status}`, response.status === 429 || response.status >= 500);
             // Stream cap prevents an untrusted upstream from allocating an unbounded response.
             const reader = response.body?.getReader();
             if (!reader) throw new ResearchFailure('Empty search response');
@@ -86,6 +86,7 @@ export function createSearch(apiKey: string, fetcher: typeof fetch = fetch, time
           cache.set(query, { value: structuredClone(value), expires: Date.now() + 15 * 60_000 });
           return value;
         } catch (error) {
+          console.warn('[Future Research]', { provider: 'tavily', attempt: attempt + 1, reason: error instanceof ResearchFailure ? error.message : 'Malformed search response' });
           if (attempt >= 1 || !(error instanceof ResearchFailure) || !error.retryable) throw error;
           await new Promise(resolve => setTimeout(resolve, 150));
         }
